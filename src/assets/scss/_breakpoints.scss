@@ -1,0 +1,10 @@
+$small: 768px;
+$medium: 1024px;
+$large: 1200px;
+$extra-large: 1600px;
+
+@mixin min-width($width) {
+  @media only screen and (min-width: $width) {
+    @content;
+  }
+}

@@ -1,0 +1,77 @@
+@use '../../../assets/scss/colors';
+@use '../../../assets/scss/breakpoints' as b;
+
+@mixin nav() {
+  display: flex;
+  align-items: center;
+  flex: 0 1 45%;
+}
+
+@mixin navText() {
+  color: colors.$white;
+  text-transform: uppercase;
+  font-size: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  margin-right: 10px;
+
+  @media only screen and (min-width: b.$small) {
+  }
+}
+
+@mixin onElementState() {
+  transform: translateY(-2px);
+  text-shadow: 0 4px 2px black;
+}
+
+.header {
+  background-color: colors.$gray;
+  padding: 0 20px;
+  height: 50px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo img {
+    height: 35px;
+  }
+
+  @media only screen and (min-width: b.$small) {
+  }
+}
+
+.nav__tours {
+  @include nav;
+}
+
+.nav__sign {
+  @include nav;
+  justify-content: flex-end;
+}
+
+.nav__el {
+  @include navText;
+
+  &:hover,
+  &:active {
+    @include onElementState;
+  }
+}
+
+.alltours {
+  @include navText;
+
+  &:hover,
+  &:active {
+    @include onElementState;
+  }
+}
