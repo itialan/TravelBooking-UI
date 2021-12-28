@@ -12,7 +12,7 @@ const DestinationSingle = () => (
       </div>
       <div className={styles.content}>
         <p>
-          Italy <a href="travel_destination.html"> 07 Places</a>
+          Italy <a href="#"> 07 Places</a>
         </p>
       </div>
     </div>
