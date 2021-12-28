@@ -1,0 +1,76 @@
+@use '../../../assets/scss' as s;
+
+.wrapper {
+  @include s.col-lg-6;
+
+  // Responsive
+  @include s.min-width(s.$small) {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  @include s.min-width(s.$medium) {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+}
+
+.single_destination {
+  position: relative;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: 0.3s;
+
+  &:before {
+    background: linear-gradient(
+      to bottom,
+      rgba(4, 14, 39, 0) 0%,
+      rgba(4, 14, 39, 0.7) 100%
+    );
+    content: '';
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    position: absolute;
+  }
+}
+
+.thump img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.content {
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  z-index: 7;
+  align-items: center !important;
+
+  p {
+    display: flex !important;
+    margin-bottom: 0;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 400;
+    font-family: 'Rubik', sans-serif;
+    transition: 0.3s;
+
+    a {
+      display: inline-block;
+      background: #1ec6b6;
+      font-size: 12px;
+      border-radius: 30px;
+      font-weight: 400;
+      padding: 0px 12px;
+      height: 25px;
+      line-height: 25px;
+      color: #fff;
+      margin-left: 10px;
+      transition: 0.3s;
+    }
+  }
+}

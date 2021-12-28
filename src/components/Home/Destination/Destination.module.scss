@@ -1,0 +1,66 @@
+@use '../../../assets/scss' as s;
+
+.popular_destination_area {
+  padding-top: 70px;
+  padding-bottom: 60px;
+
+  &_title {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h3 {
+      font-weight: 400;
+      font-size: 30px;
+      color: #040e27;
+      position: relative;
+      z-index: 0;
+      padding-bottom: 7px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #7a838b;
+      line-height: 28px;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+.container {
+  @include s.container;
+
+  @include s.min-width(s.$e-small) {
+    max-width: 540px;
+  }
+
+  @include s.min-width(s.$small) {
+    max-width: 720px;
+  }
+
+  @include s.min-width(s.$medium) {
+    max-width: 960px;
+  }
+
+  @include s.min-width(s.$large) {
+    max-width: 1140px;
+  }
+}
+
+.row {
+  @include s.row;
+}
+
+.row__justify_content_center {
+  @include s.row;
+  justify-content: center !important;
+}
+
+.col_lg_6 {
+  @include s.col-lg-6;
+
+  @include s.min-width(s.$medium) {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
