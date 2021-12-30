@@ -3,3 +3,7 @@ export const PATH = {
   SIGNIN: '/signin',
   SIGNUP: '/signup',
 };
+
+export const URL = {
+  HOST: 'http://localhost:3000',
+};
