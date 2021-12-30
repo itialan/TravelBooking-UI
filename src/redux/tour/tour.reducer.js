@@ -1,7 +1,7 @@
 import TourActionTypes from './tour.types';
 
 const INITIAL_STATE = {
-  tours: null,
+  tours: [],
   isFetching: false,
   errorMessage: undefined,
 };

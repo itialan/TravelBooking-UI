@@ -4,32 +4,38 @@ import styles from './PlaceSingle.module.scss';
 
 import tourPhoto from '../../../assets/images/hero-img.jpg';
 
-const PlaceSingle = () => (
+import { handlePrice } from '../../../helpers/string';
+
+const PlaceSingle = ({
+  name,
+  price,
+  ratingsAverage,
+  ratingsQuantity,
+  duration,
+}) => (
   <div className={styles.wrapper}>
     <div className={styles.single_place}>
       <div className={styles.thump}>
         <img src={tourPhoto} />
         <a href="#" className={styles.prise}>
-          $500
+          {handlePrice(price)}
         </a>
       </div>
       <div className={styles.place_info}>
         <a href="destination_details.html">
-          <h3>California</h3>
+          <h3>{name}</h3>
         </a>
-        <p>United State of America</p>
+        <p>Việt Nam</p>
         <div className={styles.rating_days}>
           <span className={styles.star_wrapper}>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <a href="#">(20 Review)</a>
+            {[1, 2, 3, 4, 5].map((rate) =>
+              ratingsAverage >= rate ? <i className="fa fa-star"></i> : ''
+            )}
+            <a href="#">({ratingsQuantity} Review)</a>
           </span>
           <div className={styles.days}>
             <i className="fa fa-clock"></i>
-            <a href="#">5 Days</a>
+            <a href="#">{duration} Days</a>
           </div>
         </div>
       </div>
