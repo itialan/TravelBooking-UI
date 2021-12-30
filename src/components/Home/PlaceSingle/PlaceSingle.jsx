@@ -2,9 +2,8 @@ import React from 'react';
 
 import styles from './PlaceSingle.module.scss';
 
-import tourPhoto from '../../../assets/images/hero-img.jpg';
-
 import { handlePrice } from '../../../helpers/string';
+import { URL } from '../../../constants/paths';
 
 const PlaceSingle = ({
   name,
@@ -12,11 +11,12 @@ const PlaceSingle = ({
   ratingsAverage,
   ratingsQuantity,
   duration,
+  imageCover,
 }) => (
   <div className={styles.wrapper}>
     <div className={styles.single_place}>
       <div className={styles.thump}>
-        <img src={tourPhoto} />
+        <img src={`${URL.HOST}/img/tours/${imageCover}`} />
         <a href="#" className={styles.prise}>
           {handlePrice(price)}
         </a>
@@ -28,8 +28,12 @@ const PlaceSingle = ({
         <p>Việt Nam</p>
         <div className={styles.rating_days}>
           <span className={styles.star_wrapper}>
-            {[1, 2, 3, 4, 5].map((rate) =>
-              ratingsAverage >= rate ? <i className="fa fa-star"></i> : ''
+            {[1, 2, 3, 4, 5].map((rate, index) =>
+              ratingsAverage >= rate ? (
+                <i key={index} className="fa fa-star"></i>
+              ) : (
+                ''
+              )
             )}
             <a href="#">({ratingsQuantity} Review)</a>
           </span>
