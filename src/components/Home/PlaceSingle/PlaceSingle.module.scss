@@ -16,7 +16,7 @@
 }
 
 .single_place {
-  background: s.$white;
+  background: s.$white-2;
   border-radius: 5px;
   overflow: hidden;
   transition: 0.3s;
@@ -39,7 +39,7 @@
     top: 20px;
     left: 20px;
     border-radius: 18px;
-    color: s.$white;
+    color: s.$white-2;
     font-size: 16px;
     transition: 0.3s;
   }
