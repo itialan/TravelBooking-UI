@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import PlaceSingle from '../PlaceSingle/PlaceSingle';
-
 import { fetchTourList } from '../../../redux/tour/tour.thunks';
+
+import PlaceSingle from '../PlaceSingle/PlaceSingle';
 
 import styles from './Place.module.scss';
 
 const Place = () => {
   const tours = useSelector((state) => state.tour.tours);
   const dispatch = useDispatch();
-  console.log(tours);
 
   useEffect(() => {
     dispatch(fetchTourList());
@@ -31,9 +30,11 @@ const Place = () => {
           </div>
         </div>
         <div className={styles.row}>
-          {tours.map(({ id, ...otherSectionProps }) => (
-            <PlaceSingle key={id} {...otherSectionProps} />
-          ))}
+          {tours
+            .filter((item, index) => index < 6)
+            .map(({ id, ...otherSectionProps }) => (
+              <PlaceSingle key={id} {...otherSectionProps} />
+            ))}
         </div>
       </div>
     </div>
