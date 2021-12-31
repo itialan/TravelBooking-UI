@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { PATH } from '../constants/paths';
 
-import Home from '../pages/Home/Home';
+import Spinner from '../components/Common/Spinner/Spinner';
+
+const Home = lazy(() => import('../pages/Home/Home'));
 
 const HomeRoute = () => {
   return (
     <Switch>
-      <Route exact path={PATH.HOME} component={Home} />
+      <Suspense fallback={<Spinner />}>
+        <Route exact path={PATH.HOME} component={Home} />
+      </Suspense>
     </Switch>
   );
 };
