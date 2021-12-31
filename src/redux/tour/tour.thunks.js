@@ -8,7 +8,9 @@ export const fetchTourList = () => {
 
     try {
       const response = await getTourList();
-      dispatch(actions.getTourListSuccess(response.data.data));
+      if (response.data) {
+        dispatch(actions.getTourListSuccess(response.data.data));
+      }
     } catch (error) {
       dispatch(actions.getTourListFailure(error.message));
     }
