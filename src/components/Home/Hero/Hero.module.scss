@@ -36,7 +36,7 @@
     url(../../../assets/images/hero-img.jpg);
   background-size: cover;
   background-position: center;
-  height: 95vh;
+  height: 55vh;
   background-attachment: fixed;
 
   &__textbox {
@@ -55,7 +55,7 @@
     h1 {
       color: colors.$white;
       display: block;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 600;
       letter-spacing: 10px;
 
@@ -76,6 +76,10 @@
     @include b.min-width(b.$small) {
       font-size: 35px;
     }
+  }
+
+  @include b.min-width(b.$small) {
+    height: 95vh;
   }
 }
 

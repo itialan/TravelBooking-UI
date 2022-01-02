@@ -1,0 +1,42 @@
+@use '../../../assets/scss' as s;
+
+.btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.5s;
+
+  &:hover {
+    padding: 8px 10px;
+    transition: all 0.3s ease-out;
+    background: s.$blue-hover;
+  }
+
+  &--primary {
+    background-color: #6568f4;
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: s.$white;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #6568f4;
+    transition: all 0.3s ease-out;
+  }
+
+  &--medium {
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: s.$white;
+  }
+
+  &--large {
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 18px;
+    color: s.$white;
+  }
+}

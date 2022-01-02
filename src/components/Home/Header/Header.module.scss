@@ -1,77 +1,151 @@
-@use '../../../assets/scss/colors';
-@use '../../../assets/scss/breakpoints' as b;
+@use '../../../assets/scss' as s;
 
-@mixin nav() {
+.navbar_item {
+  background: s.$white;
+  height: 65px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  flex: 0 1 45%;
+  font-size: 14px;
+  border-bottom: 1px solid #e1e1e1;
+  padding: 0 10px;
+
+  @include s.max-width(s.$small) {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+  }
 }
 
-@mixin navText() {
-  color: colors.$white;
-  text-transform: uppercase;
-  font-size: 12px;
+.navbar_logo {
+  color: s.$white;
+  justify-self: start;
+  margin-left: 20px;
+  cursor: pointer;
+
+  @include s.max-width(s.$small) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(10%, -10%);
+  }
+}
+
+.fa-react {
+  margin-left: 5px;
+  font-size: 25px;
+}
+
+.nav_menu {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  list-style: none;
+  text-align: center;
+  width: 70vw;
+  justify-content: end;
+  margin-right: 5px;
+  align-items: center;
+
+  li {
+    width: 100%;
+  }
+
+  @include s.max-width(s.$small) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0;
+    position: absolute;
+    top: 65px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+    padding: 0;
+
+    &.active {
+      background: s.$white;
+      left: 0;
+      opacity: 1;
+      transition: all 0.5s ease;
+      z-index: 1;
+    }
+  }
+}
+
+.nav_links {
+  color: s.$black;
   text-decoration: none;
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: s.$white-hover;
+    border-radius: 4px;
+    transition: all 0.2s ease-out;
+  }
+
+  @include s.max-width(s.$small) {
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    display: table;
+    font-size: 20px;
+
+    &:hover {
+      background-color: s.$white-hover;
+      border-radius: 0;
+    }
+  }
+}
+
+.nav_user {
   display: inline-flex;
   align-items: center;
-  transition: all 0.2s;
-  font-weight: 400;
-  background: none;
-  border: none;
+  text-decoration: none;
   cursor: pointer;
-  font-family: inherit;
-  margin-right: 10px;
 
-  @media only screen and (min-width: b.$small) {
+  &_img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  @include s.max-width(s.$small) {
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding: 15px 100%;
   }
 }
 
-@mixin onElementState() {
-  transform: translateY(-2px);
-  text-shadow: 0 4px 2px black;
+.fa-bars {
+  color: s.$white;
 }
 
-.header {
-  background-color: colors.$gray;
-  padding: 0 20px;
-  height: 50px;
-  position: relative;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &__logo img {
-    height: 35px;
-  }
-
-  @media only screen and (min-width: b.$small) {
+.fa-times {
+  @include s.max-width(s.$small) {
+    color: s.$black;
+    font-size: 20px;
   }
 }
 
-.nav__tours {
-  @include nav;
-}
+.menu_icon {
+  display: none;
 
-.nav__sign {
-  @include nav;
-  justify-content: flex-end;
-}
-
-.nav__el {
-  @include navText;
-
-  &:hover,
-  &:active {
-    @include onElementState;
+  @include s.max-width(s.$small) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-140%, 60%);
+    font-size: 25px;
+    cursor: pointer;
   }
 }
 
-.alltours {
-  @include navText;
-
-  &:hover,
-  &:active {
-    @include onElementState;
+Button {
+  @include s.max-width(s.$small) {
+    margin-bottom: 15px;
+    width: 350px;
+    font-size: 20px !important;
   }
 }

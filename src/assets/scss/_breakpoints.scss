@@ -9,3 +9,9 @@ $extra-large: 1600px;
     @content;
   }
 }
+
+@mixin max-width($width) {
+  @media only screen and (max-width: $width) {
+    @content;
+  }
+}

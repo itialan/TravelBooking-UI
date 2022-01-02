@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './Header.module.scss';
 
-import logoWhite from '../../../assets/images/logo-white.png';
+import logo from '../../../assets/images/logo.png';
+import avatar from '../../../assets/images/default.jpg';
+import { MENU_ITEMS } from '../../../constants/paths';
+
+import Button from '../Button/Button';
 
 const Header = () => {
+  const [click, setClick] = useState(false);
+
   return (
-    <header className={styles.header}>
-      <nav className={styles.nav__tours}>
-        <Link className={styles.alltours} to="#">
-          All Tour
-        </Link>
-      </nav>
-      <div className={styles.header__logo}>
-        <img src={logoWhite} alt="NQH logo" />
+    <nav className={styles.navbar_item}>
+      <h1 className={styles.navbar_logo}>
+        <img src={logo} />
+      </h1>
+      <div className={styles.menu_icon} onClick={() => setClick(!click)}>
+        <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
       </div>
-      <nav className={styles.nav__sign}>
-        <Link className={styles.nav__el} to="#">
-          SIGN IN
-        </Link>
-        <Link className={styles.nav__el} to="#">
-          SIGN UP
-        </Link>
-      </nav>
-    </header>
+      <ul
+        className={
+          click ? `${styles.nav_menu} ${styles.active}` : `${styles.nav_menu}`
+        }
+      >
+        {MENU_ITEMS.map((item, index) => (
+          <li key={index}>
+            <a className={styles[item.cName]} href={item.url}>
+              {item.title}
+            </a>
+          </li>
+        ))}
+        <Button>Sign In</Button>
+        {/*<a className={styles.nav_user}>
+          <img src={avatar} className={styles.nav_user_img} />
+          <span>Hoa</span>
+        </a>*/}
+      </ul>
+    </nav>
   );
 };
 
