@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <nav className={styles.navbar_item}>
       <h1 className={styles.navbar_logo}>
-        <img src={logo} />
+        <img src={logo} alt="logo" />
       </h1>
       <div className={styles.menu_icon} onClick={() => setClick(!click)}>
         <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
@@ -32,7 +32,9 @@ const Header = () => {
             </a>
           </li>
         ))}
-        <Button>Sign In</Button>
+        <Link to="/signin">
+          <Button>Sign In</Button>
+        </Link>
         {/*<a className={styles.nav_user}>
           <img src={avatar} className={styles.nav_user_img} />
           <span>Hoa</span>
