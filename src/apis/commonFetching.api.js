@@ -11,6 +11,21 @@ export const getData = async (endpoint) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data.message);
+  }
+};
+
+export const postData = async (endpoint, data) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: `${URL.HOST}/api/v1/${endpoint}`,
+      data,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error.response.data);
+    return error.response.data;
   }
 };

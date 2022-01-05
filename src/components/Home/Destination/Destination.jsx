@@ -10,7 +10,6 @@ import styles from './Destination.module.scss';
 const Destination = () => {
   const destinations = useSelector((state) => state.destination.destinations);
   const dispatch = useDispatch();
-  console.log(destinations);
 
   useEffect(() => {
     dispatch(fetchDestinationList());

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import styles from './Header.module.scss';
@@ -11,6 +12,9 @@ import Button from '../Button/Button';
 
 const Header = () => {
   const [click, setClick] = useState(false);
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  console.log(currentUser);
 
   return (
     <nav className={styles.navbar_item}>
@@ -32,13 +36,16 @@ const Header = () => {
             </a>
           </li>
         ))}
-        <Link to="/signin">
-          <Button>Sign In</Button>
-        </Link>
-        {/*<a className={styles.nav_user}>
-          <img src={avatar} className={styles.nav_user_img} />
-          <span>Hoa</span>
-        </a>*/}
+        {currentUser ? (
+          <a className={styles.nav_user}>
+            <img src={avatar} className={styles.nav_user_img} />
+            <span>Hoa</span>
+          </a>
+        ) : (
+          <Link to="/signin">
+            <Button>Sign In</Button>
+          </Link>
+        )}
       </ul>
     </nav>
   );
