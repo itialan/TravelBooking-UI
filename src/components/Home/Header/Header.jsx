@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
+import { signOut } from '../../../redux/auth/auth.thunks';
+
+// components
+import Button from '../Button/Button';
+
+// styles
 import styles from './Header.module.scss';
 
+// images
 import logo from '../../../assets/images/logo.png';
 import avatar from '../../../assets/images/default.jpg';
-import { MENU_ITEMS } from '../../../constants/paths';
 
-import Button from '../Button/Button';
+// paths
+import { MENU_ITEMS, URL } from '../../../constants/paths';
 
 const Header = () => {
   const [click, setClick] = useState(false);
-  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSignOut = () => {
+    dispatch(signOut(history));
+  };
 
   return (
     <nav className={styles.navbar_item}>
@@ -36,10 +48,20 @@ const Header = () => {
           </li>
         ))}
         {currentUser ? (
-          <a className={styles.nav_user}>
-            <img src={avatar} className={styles.nav_user_img} />
-            <span>Hoa</span>
-          </a>
+          <li>
+            <a className={styles.nav_user}>
+              <img
+                src={`${URL.HOST}/img/users/${currentUser.photo}`}
+                className={styles.nav_user_img}
+              />
+              <span>{currentUser.name}</span>
+              <ul className={styles.dropdown}>
+                <li onClick={handleSignOut}>
+                  <i className="fas fa-sign-out-alt"></i> Sign out
+                </li>
+              </ul>
+            </a>
+          </li>
         ) : (
           <Link to="/signin">
             <Button>Sign In</Button>

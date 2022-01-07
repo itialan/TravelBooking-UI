@@ -106,10 +106,17 @@
 }
 
 .nav_user {
-  display: inline-flex;
-  align-items: center;
+  //display: inline-flex;
+  //align-items: center;
   text-decoration: none;
   cursor: pointer;
+  padding: 12px 0;
+
+  &:hover > .dropdown {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
 
   &_img {
     height: 30px;
@@ -118,10 +125,40 @@
     margin-right: 10px;
   }
 
+  span {
+    vertical-align: middle;
+  }
+
+  .dropdown {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    padding: 0;
+    min-width: 115px;
+    margin-top: 5px;
+
+    li {
+      list-style: none;
+      background: s.$white-2;
+      transition-duration: 0.5s;
+      padding: 10px;
+
+      &:hover {
+        background: s.$white-hover;
+      }
+
+      a {
+        color: s.$black;
+      }
+    }
+  }
+
   @include s.max-width(s.$small) {
     font-size: 20px;
     padding-bottom: 10px;
     padding: 15px 100%;
+    white-space: nowrap;
   }
 }
 

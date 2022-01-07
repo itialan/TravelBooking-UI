@@ -36,3 +36,11 @@ export const checkUserSession = () => {
     }
   };
 };
+
+export const signOut = (history) => {
+  return (dispatch) => {
+    Cookies.remove('jwt');
+    dispatch(actions.signOut());
+    history.push(PATH.SIGNIN);
+  };
+};

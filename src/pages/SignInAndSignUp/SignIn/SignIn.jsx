@@ -29,7 +29,6 @@ const SignIn = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(email, password);
     dispatch(signInWithEmailAndPassword(email, password, history));
   };
 

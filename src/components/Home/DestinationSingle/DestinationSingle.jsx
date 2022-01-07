@@ -1,7 +1,9 @@
 import React from 'react';
 
+// styles
 import styles from './DestinationSingle.module.scss';
 
+// images
 import tourImage from '../../../assets/images/hero-img.jpg';
 
 const DestinationSingle = ({ destination }) => (
