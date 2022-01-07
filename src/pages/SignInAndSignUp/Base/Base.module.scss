@@ -25,6 +25,19 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.messageContainer {
+  width: 260px;
+  margin: 10px auto;
+}
+
+.messageError {
+  padding: 10px;
+  background-color: s.$red;
+  border-radius: 5px;
+  margin: 0;
+  color: s.$white;
+}
+
 .headerTitle {
   text-align: center;
   font-family: inherit;

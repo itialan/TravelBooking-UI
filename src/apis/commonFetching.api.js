@@ -1,12 +1,13 @@
 import axios from 'axios';
 
+// paths
 import { URL } from '../constants/paths';
 
 export const getData = async (endpoint) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `${URL.HOST}/api/v1/${endpoint}`,
+      url: `${URL.HOST}${URL.BASE_API}${endpoint}`,
     });
 
     return response.data;
@@ -19,7 +20,7 @@ export const postData = async (endpoint, data) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: `${URL.HOST}/api/v1/${endpoint}`,
+      url: `${URL.HOST}${URL.BASE_API}${endpoint}`,
       data,
     });
 

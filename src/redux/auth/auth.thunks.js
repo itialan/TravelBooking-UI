@@ -1,7 +1,8 @@
 import * as actions from './auth.actions';
 
 // apis
-import { signin } from '../../apis/user.api';
+import Cookies from 'js-cookie';
+import { signin, checkSession } from '../../apis/user.api';
 
 // paths
 import { PATH } from '../../constants/paths';
@@ -13,12 +14,25 @@ export const signInWithEmailAndPassword = (email, password, history) => {
     const response = await signin({ email, password });
     if (response.status === 'success') {
       const user = response.data.user;
-      dispatch(actions.signInSuccess(user));
+      const isAuth = user ? true : false;
+      dispatch(actions.signInSuccess({ user, isAuth }));
 
-      localStorage.setItem('token', response.token);
+      Cookies.set('jwt', response.token);
       history.push(PATH.HOME);
     } else if (response.status === 'fail') {
       dispatch(actions.signInFailure(response.message));
+    }
+  };
+};
+
+export const checkUserSession = () => {
+  return async (dispatch) => {
+    const token = Cookies.get('jwt');
+    if (token) {
+      const response = await checkSession(token);
+      const user = response.data.data.user;
+      const isAuth = user ? true : false;
+      dispatch(actions.checkUserSession({ user, isAuth }));
     }
   };
 };

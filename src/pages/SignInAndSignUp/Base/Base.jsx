@@ -7,10 +7,10 @@ export const FormHeader = ({ title }) => (
   <h2 className={styles.headerTitle}>{title}</h2>
 );
 
-export const FormInput = ({ description, type, handleChange }) => (
+export const FormInput = ({ description, type, handleChange, required }) => (
   <div className={styles.row}>
     <label>{description}</label>
-    <input type={type} onChange={handleChange} />
+    <input type={type} onChange={handleChange} required={required} />
   </div>
 );
 

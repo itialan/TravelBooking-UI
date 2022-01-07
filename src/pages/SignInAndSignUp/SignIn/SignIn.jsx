@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-// styles
-import styles from '../Base/Base.module.scss';
+// actions
+import { signInWithEmailAndPassword } from '../../../redux/auth/auth.thunks';
 
 // components
 import Button from '../../../components/Home/Button/Button';
 import { FormHeader, FormInput, AlternativeSign } from '../Base/Base';
 
-// actions
-import { signInWithEmailAndPassword } from '../../../redux/auth/auth.thunks';
+// styles
+import styles from '../Base/Base.module.scss';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
   const history = useHistory();
 
   const handleEmail = (e) => {
@@ -36,17 +37,26 @@ const SignIn = () => {
     <div className={`${styles.wrapper} ${styles.signInBg}`}>
       <div className={styles.signForm}>
         <FormHeader title="Sign in" />
+        {error ? (
+          <div className={styles.messageContainer}>
+            <p className={styles.messageError}>Invalid username or password!</p>
+          </div>
+        ) : (
+          ''
+        )}
         <form onSubmit={submit}>
           <div className={styles.elementForm}>
             <FormInput
               description="Email"
-              type="text"
+              type="email"
               handleChange={handleEmail}
+              required
             />
             <FormInput
               description="Password"
               type="password"
               handleChange={handlePassword}
+              required
             />
             <Button type="submit">Sign In</Button>
           </div>

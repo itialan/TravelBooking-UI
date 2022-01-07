@@ -4,9 +4,9 @@ export const signInRequest = () => ({
   type: AuthActionTypes.SIGNIN_REQUEST,
 });
 
-export const signInSuccess = (user) => ({
+export const signInSuccess = (payload) => ({
   type: AuthActionTypes.SIGNIN_SUCCESS,
-  payload: user,
+  payload,
 });
 
 export const signInFailure = (error) => ({
@@ -16,4 +16,9 @@ export const signInFailure = (error) => ({
 
 export const signOut = () => ({
   type: AuthActionTypes.SIGNOUT,
+});
+
+export const checkUserSession = (payload) => ({
+  type: AuthActionTypes.CHECK_USER_SESSION,
+  payload,
 });

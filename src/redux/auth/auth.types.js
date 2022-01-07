@@ -6,6 +6,7 @@ export const AuthActionTypes = {
   SIGNUP_SUCCESS: 'AUTH/SIGNUP_SUCESS',
   SIGNUP_FAILURE: 'AUTH/SIGNUP_FAILURE',
   SIGNOUT: 'AUTH/SIGNOUT',
+  CHECK_USER_SESSION: 'AUTH/CHECK_USER_SESSION',
 };
 
 export default AuthActionTypes;

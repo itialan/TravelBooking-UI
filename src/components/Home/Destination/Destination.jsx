@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+// actions
 import { fetchDestinationList } from '../../../redux/destination/destination.thunks';
 
+// components
 import DestinationSingle from '../DestinationSingle/DestinationSingle';
 
+// styles
 import styles from './Destination.module.scss';
 
 const Destination = () => {

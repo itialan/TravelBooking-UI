@@ -14,7 +14,6 @@ const Header = () => {
   const [click, setClick] = useState(false);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
-  console.log(currentUser);
 
   return (
     <nav className={styles.navbar_item}>

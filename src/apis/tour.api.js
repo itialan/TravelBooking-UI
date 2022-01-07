@@ -1,3 +1,3 @@
 import { getData } from './commonFetching.api';
 
-export const getTourList = () => getData('tours');
+export const getTourList = () => getData('/tours');
