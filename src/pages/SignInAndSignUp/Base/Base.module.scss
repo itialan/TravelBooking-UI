@@ -1,0 +1,107 @@
+@use '../../../assets/scss' as s;
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signInBg {
+  background: linear-gradient(135deg, #22c1c3 0%, #fdbb2d 100%);
+}
+
+.signUpBg {
+  background: linear-gradient(135deg, #3498db 0%, #e74c3c 100%);
+}
+
+.signForm {
+  max-width: 500px;
+  min-width: 300px;
+  width: 30%;
+  height: fit-content;
+  background-color: s.$white;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.messageContainer {
+  width: 260px;
+  margin: 10px auto;
+}
+
+.messageError {
+  padding: 10px;
+  background-color: s.$red;
+  border-radius: 5px;
+  margin: 0;
+  color: s.$white;
+}
+
+.headerTitle {
+  text-align: center;
+  font-family: inherit;
+  padding: 15px 0;
+  margin: 0;
+  font-size: 25px;
+  color: s.$midnight-blue;
+}
+
+.elementForm {
+  display: flex;
+  flex-direction: column;
+
+  Button {
+    min-width: 260px;
+    width: 80%;
+    margin: 30px auto;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  max-width: 100%;
+
+  input {
+    width: 80%;
+    border: none;
+    font-size: 14px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    box-shadow: inset 0px -3px 0px 0px rgba(187, 187, 187, 0.2);
+    transition: box-shadow 0.2s ease-in;
+
+    &:focus {
+      box-shadow: inset 0px -3px 0px 0px rgba(34, 193, 195, 0.7);
+      outline: none;
+    }
+
+    &:hover::-webkit-input-placeholder,
+    &:focus::-webkit-input-placeholder {
+      opacity: 0;
+    }
+  }
+
+  label {
+    align-self: start;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    color: s.$midnight-blue;
+  }
+}
+
+.alternativeSign {
+  padding-left: 20px;
+  font-size: 13px;
+  color: #7c7c7c;
+  margin-bottom: 20px;
+
+  .signLink {
+    color: s.$blue;
+    margin-left: 5px;
+  }
+}

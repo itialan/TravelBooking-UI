@@ -1,16 +1,25 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
+// components
+import SignIn from '../pages/SignInAndSignUp/SignIn/SignIn';
+
+// paths
 import { PATH } from '../constants/paths';
 
-import SignIn from '../pages/SignIn/SignIn';
-
 const SignInRoute = () => {
-	return (
-		<Switch>
-			<Route exact path={PATH.SIGNIN} component={SignIn} />
-		</Switch>
-	);
+  const isAuth = useSelector((state) => state.auth.isAuth);
+
+  return (
+    <Switch>
+      <Route
+        exact
+        path={PATH.SIGNIN}
+        render={() => (isAuth ? <Redirect to={PATH.HOME} /> : <SignIn />)}
+      />
+    </Switch>
+  );
 };
 
 export default SignInRoute;

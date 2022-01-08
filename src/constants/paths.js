@@ -6,6 +6,7 @@ export const PATH = {
 
 export const URL = {
   HOST: 'http://localhost:3000',
+  BASE_API: '/api/v1',
 };
 
 export const MENU_ITEMS = [
