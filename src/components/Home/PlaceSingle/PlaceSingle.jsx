@@ -1,8 +1,12 @@
 import React from 'react';
 
+// helpers
+import { handlePrice } from '../../../helpers/string';
+
+// styles
 import styles from './PlaceSingle.module.scss';
 
-import { handlePrice } from '../../../helpers/string';
+// paths
 import { URL } from '../../../constants/paths';
 
 const PlaceSingle = ({
