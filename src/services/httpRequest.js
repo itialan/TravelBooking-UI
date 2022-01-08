@@ -1,6 +1,8 @@
+// libraries
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+// constants
 import { URL } from '../constants/paths';
 
 const getToken = () => Cookies.get('jwt');

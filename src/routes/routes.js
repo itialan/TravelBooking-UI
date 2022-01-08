@@ -9,6 +9,7 @@ import { checkUserSession } from '../redux/auth/auth.thunks';
 import HomeRoute from './HomeRoute';
 import SignInRoute from './SignInRoute';
 import SignUpRoute from './SignUpRoute';
+import DashboardRoute from './Admin/DashboardRoute';
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Routes = () => {
       <HomeRoute />
       <SignInRoute />
       <SignUpRoute />
+      <DashboardRoute />
     </BrowserRouter>
   );
 };

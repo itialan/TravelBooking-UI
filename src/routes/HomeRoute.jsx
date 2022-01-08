@@ -1,9 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { PATH } from '../constants/paths';
-
+// components
 import Spinner from '../components/Common/Spinner/Spinner';
+
+// paths
+import { PATH } from '../constants/paths';
 
 const Home = lazy(() => import('../pages/Home/Home'));
 
