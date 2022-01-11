@@ -3,6 +3,13 @@ export const PATH = {
   SIGNIN: '/signin',
   SIGNUP: '/signup',
   DASHBOARD: '/dashboard',
+  USERS: '/users',
+  TOURS: '/tours',
+  TOUR_LIST: '/tours/list',
+  TOUR_ADD: '/tours/add',
+  INSTOURS: '/instours',
+  INSTOUR_LIST: '/instours/list',
+  INSTOUR_ADD: '/instours/add',
 };
 
 export const URL = {
