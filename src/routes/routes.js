@@ -10,6 +10,9 @@ import HomeRoute from './HomeRoute';
 import SignInRoute from './SignInRoute';
 import SignUpRoute from './SignUpRoute';
 import DashboardRoute from './Admin/DashboardRoute';
+import TourRoute from './Admin/TourRoute';
+import InstourRoute from './Admin/InstourRoute';
+import UserRoute from './Admin/UserRoute';
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -24,6 +27,9 @@ const Routes = () => {
       <SignInRoute />
       <SignUpRoute />
       <DashboardRoute />
+      <TourRoute />
+      <InstourRoute />
+      <UserRoute />
     </BrowserRouter>
   );
 };
