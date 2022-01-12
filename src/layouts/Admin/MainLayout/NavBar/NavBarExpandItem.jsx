@@ -13,13 +13,13 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 // styles
 import useStyles from './styles';
 
-const NavBarExpandItem = ({
+function NavBarExpandItem({
   title,
   icon: Icon,
   open = false,
   children,
   style,
-}) => {
+}) {
   const classes = useStyles();
   const [isExpand, setIsExpand] = useState(open);
   console.log('NavBarExpandItem');
@@ -38,6 +38,6 @@ const NavBarExpandItem = ({
       <Collapse in={isExpand}>{children}</Collapse>
     </ListItem>
   );
-};
+}
 
-export default NavBarExpandItem;
+export default memo(NavBarExpandItem);

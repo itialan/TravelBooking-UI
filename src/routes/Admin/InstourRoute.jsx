@@ -10,7 +10,7 @@ import { PATH } from '../../constants/paths';
 
 const InstourList = lazy(() => import('../../pages/Admin/Instour/InstourList'));
 
-const InstourRoute = () => {
+function InstourRoute() {
   return (
     <Switch>
       <AuthGuard
@@ -24,6 +24,6 @@ const InstourRoute = () => {
       />
     </Switch>
   );
-};
+}
 
 export default InstourRoute;

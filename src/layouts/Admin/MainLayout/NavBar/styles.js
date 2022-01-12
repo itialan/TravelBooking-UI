@@ -12,11 +12,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   drawerHeader: {
-    padding: theme.spacing(1),
-    margin: '0 auto',
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    fontSize: 20,
   },
   item: {
     display: 'block',
@@ -70,6 +71,15 @@ const useStyles = makeStyles((theme) => ({
     '& $icon': {
       color: theme.palette.secondary.main,
     },
+  },
+  navBar_link: {
+    color: 'inherit',
+    display: 'flex',
+    justifyContent: 'center',
+    textDecoration: 'none',
+  },
+  version: {
+    fontSize: 12,
   },
 }));
 

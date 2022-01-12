@@ -43,31 +43,33 @@ const NavBarItem = ({
 
   return (
     <ListItem className={clsx(classes.itemLeaf)} disableGutters key={title}>
-      <>
-        {isExternalLink ? (
-          <Link
-            href={href}
-            target="_blank"
-            style={style}
-            className={clsx(classes.buttonLeaf, `depth-${depth}`)}
-          >
-            {Icon && <Icon className={classes.icon} size="20" />}
-            <span className={classes.title}>{title}</span>
-          </Link>
-        ) : (
-          <Button
-            activeClassName={classes.active}
-            className={clsx(classes.buttonLeaf, `depth-${depth}`)}
-            component={RouterLink}
-            exact
-            style={style}
-            to={href}
-          >
-            {Icon && <Icon className={classes.icon} size="20" />}
-            <span className={classes.title}>{title}</span>
-          </Button>
-        )}
-      </>
+      {true ? (
+        <>
+          {isExternalLink ? (
+            <Link
+              href={href}
+              target="_blank"
+              style={style}
+              className={clsx(classes.buttonLeaf, `depth-${depth}`)}
+            >
+              {Icon && <Icon className={classes.icon} size="20" />}
+              <span className={classes.title}>{title}</span>
+            </Link>
+          ) : (
+            <Button
+              activeClassName={classes.active}
+              className={clsx(classes.buttonLeaf, `depth-${depth}`)}
+              component={RouterLink}
+              exact
+              style={style}
+              to={href}
+            >
+              {Icon && <Icon className={classes.icon} size="20" />}
+              <span className={classes.title}>{title}</span>
+            </Button>
+          )}
+        </>
+      ) : null}
     </ListItem>
   );
 };

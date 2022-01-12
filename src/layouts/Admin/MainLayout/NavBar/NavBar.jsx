@@ -23,20 +23,29 @@ import { navBarCommon } from '../../../../routes/navBarCommon';
 // components
 import NavBarItem from './NavBarItem';
 
-const NavBar = ({ isDrawer }) => {
+function NavBar({ isDrawer }) {
   const classes = useStyles();
   const location = useLocation();
-
   console.log('NavBar');
 
-  const renderChildRoutes = ({ acc, curr, pathName, depth = 0 }) => {
+  const renderNavItems = ({ items, pathname, depth }) => {
+    return (
+      <List disablePadding>
+        {items?.reduce(
+          (acc, curr) => renderChildRoutes({ acc, curr, pathname, depth }),
+          []
+        )}
+      </List>
+    );
+  };
+
+  const renderChildRoutes = ({ acc, curr, pathname, depth = 0 }) => {
     const key = curr.title + depth;
 
     if (curr.items) {
-      // check current navbar item is clicked or not?
-      const open = matchPath(pathName, {
+      const open = matchPath(pathname, {
         path: curr.href,
-        exact: true,
+        exact: false,
       });
 
       acc.push(
@@ -44,13 +53,17 @@ const NavBar = ({ isDrawer }) => {
           key={`multi-${key}`}
           depth={depth}
           icon={curr.icon}
+          open={Boolean(open)}
           title={curr.title}
           href={curr.href}
           label={curr.label}
           isExternalLink={curr.isExternalLink}
-          open={Boolean(open)}
         >
-          {renderNavbarItems({ items: curr.items, depth: depth + 1, pathName })}
+          {renderNavItems({
+            depth: depth + 1,
+            pathname,
+            items: curr.items,
+          })}
         </NavBarItem>
       );
     } else {
@@ -58,26 +71,16 @@ const NavBar = ({ isDrawer }) => {
         <NavBarItem
           key={`alone-${key}`}
           depth={depth}
+          href={curr.href}
           icon={curr.icon}
           title={curr.title}
-          href={curr.href}
           label={curr.label}
           isExternalLink={curr.isExternalLink}
         />
       );
     }
-
     return acc;
   };
-
-  const renderNavbarItems = ({ items, pathname, depth }) => (
-    <List disablePadding>
-      {items?.reduce(
-        (acc, curr) => renderChildRoutes({ acc, curr, pathname, depth }),
-        []
-      )}
-    </List>
-  );
 
   const renderNavbarCommon = (navbars) => {
     return (
@@ -90,9 +93,9 @@ const NavBar = ({ isDrawer }) => {
                 <ListSubheader disableSticky>{nav.subheader}</ListSubheader>
               }
             >
-              {renderNavbarItems({
+              {renderNavItems({
                 items: nav.items,
-                pathName: location.pathname,
+                pathname: location.pathname,
               })}
             </List>
           );
@@ -112,14 +115,15 @@ const NavBar = ({ isDrawer }) => {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Link to={PATH.HOME}>
+        <Link to={PATH.HOME} className={classes.navBar_link}>
           <img src={logo} alt="Logo" title="logo" />
         </Link>
       </div>
       <Divider />
+
       {renderNavbarCommon(navBarCommon)}
     </Drawer>
   );
-};
+}
 
 export default memo(NavBar);

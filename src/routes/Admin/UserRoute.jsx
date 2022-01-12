@@ -10,7 +10,7 @@ import { PATH } from '../../constants/paths';
 
 const User = lazy(() => import('../../pages/Admin/User/User'));
 
-const UserRoute = () => {
+function UserRoute() {
   return (
     <Switch>
       <AuthGuard
@@ -24,6 +24,6 @@ const UserRoute = () => {
       />
     </Switch>
   );
-};
+}
 
 export default UserRoute;

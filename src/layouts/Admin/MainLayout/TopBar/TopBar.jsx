@@ -18,7 +18,7 @@ import Account from './components/Account';
 // styles
 import useStyles from './styles';
 
-const TopBar = ({ isDrawer, handleToggleDrawer }) => {
+function TopBar({ isDrawer, handleToogleDrawer }) {
   const classes = useStyles();
   console.log('TopBar');
 
@@ -31,7 +31,6 @@ const TopBar = ({ isDrawer, handleToggleDrawer }) => {
     >
       <Toolbar>
         <IconButton
-          edge="start"
           color="inherit"
           aria-label="open drawer"
           edge="start"
@@ -42,19 +41,19 @@ const TopBar = ({ isDrawer, handleToggleDrawer }) => {
         <IconButton
           color="inherit"
           aria-label="open drawer"
+          onClick={handleToogleDrawer}
           edge="start"
-          onClick={handleToggleDrawer}
-          className={classes.menuButton}
+          className={clsx(classes.menuButton)}
         >
           <MenuIcon />
         </IconButton>
-        <div className={classes.grow}></div>
-        <div className={classes.topBarSetting}>
+        <div className={classes.grow} />
+        <div className={classes.topBar_setting}>
           <Account {...classes} />
         </div>
       </Toolbar>
     </AppBar>
   );
-};
+}
 
 export default memo(TopBar);

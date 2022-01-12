@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { DRAWER_WIDTH } from '../../../../constants/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,31 +10,45 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    marginLeft: `${DRAWER_WIDTH}px`,
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
+    marginLeft: `${DRAWER_WIDTH}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  menuProfile: {
-    minWidth: 115,
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
   },
-  textRole: {
-    padding: '6px 16px',
-    marginBottom: 6,
-    fontSize: '14px',
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
   },
   grow: {
     flexGrow: 1,
   },
-  topBarSetting: {
+  menuLanguage: {
+    color: '#fff',
+  },
+  menuProfile: {
+    minWidth: 115,
+  },
+  topBar_setting: {
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
+  },
+  textRole: {
+    padding: '6px 16px',
+    marginBottom: 6,
+    fontSize: '1rem',
   },
 }));
 

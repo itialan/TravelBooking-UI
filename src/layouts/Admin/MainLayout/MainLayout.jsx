@@ -18,6 +18,10 @@ const MainLayout = ({ children }) => {
     setIsDrawer(!isDrawer);
   }, [isDrawer]);
 
+  /*const handleToggleDrawer = () => {
+    setIsDrawer(!isDrawer);
+  };*/
+
   return (
     <div className={classes.root}>
       <CssBaseline />

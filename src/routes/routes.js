@@ -14,7 +14,7 @@ import TourRoute from './Admin/TourRoute';
 import InstourRoute from './Admin/InstourRoute';
 import UserRoute from './Admin/UserRoute';
 
-const Routes = () => {
+function Routes() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +32,6 @@ const Routes = () => {
       <UserRoute />
     </BrowserRouter>
   );
-};
+}
 
 export default Routes;

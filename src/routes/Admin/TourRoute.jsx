@@ -11,7 +11,7 @@ import { PATH } from '../../constants/paths';
 const TourList = lazy(() => import('../../pages/Admin/Tour/TourList'));
 const TourAdd = lazy(() => import('../../pages/Admin/Tour/TourAdd'));
 
-const TourRoute = () => {
+function TourRoute() {
   return (
     <Switch>
       <AuthGuard
@@ -34,6 +34,6 @@ const TourRoute = () => {
       />
     </Switch>
   );
-};
+}
 
 export default TourRoute;
