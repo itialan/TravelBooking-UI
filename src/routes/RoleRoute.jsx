@@ -2,22 +2,26 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+// constants
 import { PATH } from '../constants/paths';
 
-const RoleRoute = ({ children, requiredRoles }) => {
+// selectors
+import { userSelector } from '../selectors/auth.selector';
+
+const RoleRoute = ({ children, requireRoles = [] }) => {
   const history = useHistory();
-  const role = useSelector((state) => state.auth.currentUser.role);
+  const user = useSelector(userSelector);
 
   useEffect(() => {
-    if (!role || requiredRoles.length === 0) {
+    if (!user || requireRoles.length === 0) {
       return;
     }
 
-    const checkRole = requiredRoles.includes(role);
+    const checkRole = requireRoles.includes(user.role);
     if (!checkRole) {
       history.replace(PATH.SIGNIN);
     }
-  }, [history, role, requiredRoles]);
+  }, [history, user, requireRoles]);
 
   return <>{children}</>;
 };

@@ -78,9 +78,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     textDecoration: 'none',
   },
-  version: {
-    fontSize: 12,
-  },
 }));
 
 export default useStyles;

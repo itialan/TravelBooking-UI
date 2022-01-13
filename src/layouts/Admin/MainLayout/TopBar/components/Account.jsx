@@ -14,11 +14,14 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 // thunks
 import { signOut } from '../../../../../redux/auth/auth.thunks';
 
+// selectors
+import { userSelector } from '../../../../../selectors/auth.selector';
+
 const Account = ({ ...classes }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
-  const role = useSelector((state) => state.auth.currentUser.role);
+  const user = useSelector(userSelector);
 
   const handleMenu = (e) => {
     setAnchorEl(e.currentTarget);
@@ -36,16 +39,16 @@ const Account = ({ ...classes }) => {
   return (
     <>
       <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
+        aria-label='account of current user'
+        aria-controls='menu-appbar'
+        aria-haspopup='true'
         onClick={handleMenu}
-        color="inherit"
+        color='inherit'
       >
         <AccountCircle />
       </IconButton>
       <Menu
-        id="menu-appbar"
+        id='menu-appbar'
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
@@ -59,7 +62,9 @@ const Account = ({ ...classes }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <div className={classes.textRole}>{role.toUpperCase()}</div>
+        <div className={classes.textRole}>
+          {user ? user.role.toUpperCase() : 'Loading...'}
+        </div>
         <Divider />
         <MenuItem>My account</MenuItem>
         <MenuItem className={classes.menuProfile} onClick={handleLogout}>

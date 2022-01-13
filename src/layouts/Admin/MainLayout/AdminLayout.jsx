@@ -10,17 +10,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // styles
 import useStyles from './styles';
 
-const MainLayout = ({ children }) => {
+const AdminLayout = ({ children }) => {
   const [isDrawer, setIsDrawer] = useState(true);
   const classes = useStyles();
 
   const handleToggleDrawer = useCallback(() => {
     setIsDrawer(!isDrawer);
   }, [isDrawer]);
-
-  /*const handleToggleDrawer = () => {
-    setIsDrawer(!isDrawer);
-  };*/
 
   return (
     <div className={classes.root}>
@@ -44,4 +40,4 @@ const MainLayout = ({ children }) => {
   );
 };
 
-export default MainLayout;
+export default AdminLayout;

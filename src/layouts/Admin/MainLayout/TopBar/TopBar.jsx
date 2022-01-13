@@ -18,31 +18,31 @@ import Account from './components/Account';
 // styles
 import useStyles from './styles';
 
-function TopBar({ isDrawer, handleToogleDrawer }) {
+function TopBar({ isDrawer, handleToggleDrawer }) {
   const classes = useStyles();
   console.log('TopBar');
 
   return (
     <AppBar
-      position="fixed"
+      position='fixed'
       className={clsx(classes.appBar, {
         [classes.appBarShift]: isDrawer,
       })}
     >
       <Toolbar>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
+          color='inherit'
+          aria-label='open drawer'
+          edge='start'
           className={clsx(classes.menuButton)}
         >
           <HomeIcon />
         </IconButton>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleToogleDrawer}
-          edge="start"
+          color='inherit'
+          aria-label='open drawer'
+          onClick={handleToggleDrawer}
+          edge='start'
           className={clsx(classes.menuButton)}
         >
           <MenuIcon />

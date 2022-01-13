@@ -15,39 +15,39 @@ export const navBarCommon = [
       {
         title: 'Tour',
         icon: FilterHdrIcon,
-        href: `${PATH.DASHBOARD}${PATH.TOURS}`,
+        href: PATH.ADMIN + PATH.TOURS,
         label: DRAWER_MENU_LABEL.TOURS,
         items: [
           {
             title: 'Add Tour',
             icon: AddIcon,
-            href: `${PATH.DASHBOARD}${PATH.TOUR_ADD}`,
+            href: PATH.ADMIN + PATH.TOUR_ADD,
             label: DRAWER_MENU_LABEL.TOUR_ADD,
           },
           {
             title: 'List Tour',
             icon: ViewListIcon,
-            href: `${PATH.DASHBOARD}${PATH.TOUR_LIST}`,
+            href: PATH.ADMIN + PATH.TOUR_LIST,
             label: DRAWER_MENU_LABEL.TOUR_LIST,
           },
         ],
       },
       {
         title: 'Instour',
-        href: `${PATH.DASHBOARD}${PATH.INSTOURS}`,
+        href: PATH.ADMIN + PATH.INSTOURS,
         icon: ExploreIcon,
         label: DRAWER_MENU_LABEL.INSTOURS,
         items: [
-          {
-            title: 'Add Instour',
-            icon: AddIcon,
-            href: `${PATH.DASHBOARD}${PATH.INSTOUR_ADD}`,
-            label: DRAWER_MENU_LABEL.INSTOURS_ADD,
-          },
+          // {
+          //   title: 'Add Instour',
+          //   icon: AddIcon,
+          //   href: PATH.INSTOUR_ADD,
+          //   label: DRAWER_MENU_LABEL.INSTOURS_ADD,
+          // },
           {
             title: 'List Instour',
             icon: ViewListIcon,
-            href: `${PATH.DASHBOARD}${PATH.INSTOUR_LIST}`,
+            href: PATH.ADMIN + PATH.INSTOUR_LIST,
             label: DRAWER_MENU_LABEL.INSTOURS_LIST,
           },
         ],
@@ -60,7 +60,7 @@ export const navBarCommon = [
       {
         title: 'Users',
         icon: PeopleIcon,
-        href: `${PATH.DASHBOARD}${PATH.USERS}`,
+        href: PATH.ADMIN + PATH.USERS,
         label: DRAWER_MENU_LABEL.USERS,
       },
     ],

@@ -11,9 +11,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 //constants
 import { PATH } from '../../../../constants/paths';
 
-// styles
-import useStyles from './styles';
-
 // images
 import logo from '../../../../assets/images/logo.png';
 
@@ -23,10 +20,12 @@ import { navBarCommon } from '../../../../routes/navBarCommon';
 // components
 import NavBarItem from './NavBarItem';
 
+// styles
+import useStyles from './styles';
+
 function NavBar({ isDrawer }) {
   const classes = useStyles();
   const location = useLocation();
-  console.log('NavBar');
 
   const renderNavItems = ({ items, pathname, depth }) => {
     return (
@@ -107,8 +106,8 @@ function NavBar({ isDrawer }) {
   return (
     <Drawer
       className={classes.drawer}
-      variant="persistent"
-      anchor="left"
+      variant='persistent'
+      anchor='left'
       open={isDrawer}
       classes={{
         paper: classes.drawerPaper,
@@ -116,7 +115,7 @@ function NavBar({ isDrawer }) {
     >
       <div className={classes.drawerHeader}>
         <Link to={PATH.HOME} className={classes.navBar_link}>
-          <img src={logo} alt="Logo" title="logo" />
+          <img src={logo} alt='Logo' title='logo' />
         </Link>
       </div>
       <Divider />
