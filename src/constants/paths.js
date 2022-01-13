@@ -2,6 +2,15 @@ export const PATH = {
   HOME: '/',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
+  ADMIN: '/admin',
+  DASHBOARD: '/dashboard',
+  USERS: '/users',
+  TOURS: '/tours',
+  TOUR_LIST: '/tours/list',
+  TOUR_ADD: '/tours/add',
+  INSTOURS: '/instours',
+  INSTOUR_LIST: '/instours/list',
+  INSTOUR_ADD: '/instours/add',
 };
 
 export const URL = {

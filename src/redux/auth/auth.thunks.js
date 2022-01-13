@@ -1,8 +1,10 @@
 import * as actions from './auth.actions';
 
 // apis
-import Cookies from 'js-cookie';
 import { signin, checkSession } from '../../apis/user.api';
+
+// libraries
+import Cookies from 'js-cookie';
 
 // paths
 import { PATH } from '../../constants/paths';

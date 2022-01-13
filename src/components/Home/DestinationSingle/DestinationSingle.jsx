@@ -10,7 +10,7 @@ const DestinationSingle = ({ destination }) => (
   <div className={styles.wrapper}>
     <div className={styles.single_destination}>
       <div className={styles.thump}>
-        <img src={tourImage} alt="destination image" />
+        <img src={tourImage} alt="destination" />
       </div>
       <div className={styles.content}>
         <p>

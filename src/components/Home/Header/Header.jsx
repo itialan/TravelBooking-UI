@@ -12,7 +12,6 @@ import styles from './Header.module.scss';
 
 // images
 import logo from '../../../assets/images/logo.png';
-import avatar from '../../../assets/images/default.jpg';
 
 // paths
 import { MENU_ITEMS, URL } from '../../../constants/paths';
