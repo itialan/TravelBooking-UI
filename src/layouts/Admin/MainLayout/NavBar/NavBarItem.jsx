@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
+
+// clsx
 import clsx from 'clsx';
 
 // material core
@@ -48,11 +50,11 @@ const NavBarItem = ({
           {isExternalLink ? (
             <Link
               href={href}
-              target="_blank"
+              target='_blank'
               style={style}
               className={clsx(classes.buttonLeaf, `depth-${depth}`)}
             >
-              {Icon && <Icon className={classes.icon} size="20" />}
+              {Icon && <Icon className={classes.icon} size='20' />}
               <span className={classes.title}>{title}</span>
             </Link>
           ) : (
@@ -64,7 +66,7 @@ const NavBarItem = ({
               style={style}
               to={href}
             >
-              {Icon && <Icon className={classes.icon} size="20" />}
+              {Icon && <Icon className={classes.icon} size='20' />}
               <span className={classes.title}>{title}</span>
             </Button>
           )}

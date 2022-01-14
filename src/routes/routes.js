@@ -18,8 +18,8 @@ const Home = lazy(() => import('../pages/Home/Home'));
 const SignIn = lazy(() => import('../pages/SignInAndSignUp/SignIn/SignIn'));
 const SignUp = lazy(() => import('../pages/SignInAndSignUp/SignUp/SignUp'));
 const Dashboard = lazy(() => import('../pages/Admin/Dashboard/Dashboard'));
-const TourList = lazy(() => import('../pages/Admin/Tour/TourList'));
-const TourAdd = lazy(() => import('../pages/Admin/Tour/TourAdd'));
+const TourList = lazy(() => import('../pages/Admin/Tour/TourList/TourList'));
+const TourAdd = lazy(() => import('../pages/Admin/Tour/TourAdd/TourAdd'));
 const InstourList = lazy(() => import('../pages/Admin/Instour/InstourList'));
 const User = lazy(() => import('../pages/Admin/User/User'));
 

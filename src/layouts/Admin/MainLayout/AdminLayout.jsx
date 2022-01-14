@@ -1,5 +1,8 @@
 import React, { useState, useCallback } from 'react';
 
+// libs
+import clsx from 'clsx';
+
 // components
 import TopBar from './TopBar/TopBar';
 import NavBar from './NavBar/NavBar';
@@ -26,12 +29,9 @@ const AdminLayout = ({ children }) => {
       <NavBar isDrawer={isDrawer} />
 
       <main
-        className={
-          (classes.content,
-          {
-            [classes.contentShift]: isDrawer,
-          })
-        }
+        className={clsx(classes.content, {
+          [classes.contentShift]: isDrawer,
+        })}
       >
         <div className={classes.toolbar} />
         {children}
