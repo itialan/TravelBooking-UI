@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 // material core
@@ -22,63 +23,34 @@ import useStyles from './styles';
 // helpers
 import { handlePrice } from '../../../../helpers/string';
 
+// thunks
+import { fetchTourList } from '../../../../redux/tour/tour.thunks';
+
+// selectors
+import {
+  totalTourSelector,
+  tourSelector,
+} from '../../../../selectors/tour.selector';
+
 // components
 import PaginationBase from '../../../../components/Common/PaginationBase/PaginationBase';
 
 // hooks
 import usePagination from '../../../../hooks/usePagination';
 
-const createData = (name, price, imageCover, startLocation, duration) => {
-  return { name, price, imageCover, startLocation, duration };
-};
-
-const rows = [
-  createData(
-    'Du Lịch Thác 1',
-    15900000,
-    'tour-613af02ac326b5898ccf7597-1631348046061-cover.jpeg',
-    'Vũng Tàu',
-    4
-  ),
-  createData(
-    'Du Lịch Thác 2',
-    15900000,
-    'tour-613af02ac326b5898ccf7597-1631348046061-cover.jpeg',
-    'Vũng Tàu',
-    4
-  ),
-  createData(
-    'Du Lịch Thác 3',
-    15900000,
-    'tour-613af02ac326b5898ccf7597-1631348046061-cover.jpeg',
-    'Vũng Tàu',
-    4
-  ),
-  createData(
-    'Du Lịch Thác 4',
-    15900000,
-    'tour-613af02ac326b5898ccf7597-1631348046061-cover.jpeg',
-    'Vũng Tàu',
-    4
-  ),
-  createData(
-    'Du Lịch Thác 5',
-    15900000,
-    'tour-613af02ac326b5898ccf7597-1631348046061-cover.jpeg',
-    'Vũng Tàu',
-    4
-  ),
-];
-
 const TourList = () => {
+  const { page, perPage, changePage, changePerPage } = usePagination();
   const history = useHistory();
   const classes = useStyles();
-  const { page, perPage, changePage, changePerPage } = usePagination();
+  const tours = useSelector(tourSelector);
+  const totalTours = useSelector(totalTourSelector);
+  const totalPage = Math.ceil(totalTours / perPage);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(page);
-    console.log(perPage);
-  }, [page, perPage]);
+    const query = `?page=${page}&limit=${perPage}`;
+    dispatch(fetchTourList(query));
+  }, [dispatch, page, perPage]);
 
   return (
     <div>
@@ -108,29 +80,38 @@ const TourList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell align='center' component='th' scope='row'>
-                  <img
-                    className={classes.img}
-                    src={`${URL.HOST}/img/tours/${row.imageCover}`}
-                  />
-                </TableCell>
-                <TableCell className={classes.name} align='center'>
-                  {row.name}
-                </TableCell>
-                <TableCell align='center'>{row.startLocation}</TableCell>
-                <TableCell align='center'>{row.duration} days</TableCell>
-                <TableCell align='center'>{handlePrice(row.price)}</TableCell>
+            {tours ? (
+              tours.map((tour) => (
+                <TableRow key={tour.id}>
+                  <TableCell align='center' component='th' scope='row'>
+                    <img
+                      className={classes.img}
+                      src={`${URL.HOST}/img/tours/${tour.imageCover}`}
+                      alt={classes.img}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.name} align='center'>
+                    {tour.name}
+                  </TableCell>
+                  <TableCell align='center'>{tour.startLocation}</TableCell>
+                  <TableCell align='center'>{tour.duration} days</TableCell>
+                  <TableCell align='center'>
+                    {handlePrice(tour.price)}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell align='center'>Loading...</TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
       <PaginationBase
         pageIndex={page}
         perPage={perPage}
-        totalPage={50}
+        totalPage={totalPage}
         changePage={changePage}
         changePerPage={changePerPage}
       />

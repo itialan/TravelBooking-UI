@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 // actions
 import { fetchDestinationList } from '../../../redux/destination/destination.thunks';
 
+// selectors
+import { routeSelector } from '../../../selectors/route.selector';
+
 // components
 import DestinationSingle from '../DestinationSingle/DestinationSingle';
 
@@ -11,7 +14,7 @@ import DestinationSingle from '../DestinationSingle/DestinationSingle';
 import styles from './Destination.module.scss';
 
 const Destination = () => {
-  const destinations = useSelector((state) => state.destination.destinations);
+  const destinations = useSelector(routeSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {

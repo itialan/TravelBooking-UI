@@ -36,7 +36,10 @@ const PaginationBase = ({
     const reg = new RegExp('^[0-9]+$');
     const { value } = event.target;
     if (reg.test(value)) {
-      setPage(Number(event.target.value));
+      const input = Number(event.target.value);
+      if (input <= totalPage) {
+        setPage(Number(event.target.value));
+      }
     }
   };
 
@@ -63,6 +66,7 @@ const PaginationBase = ({
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
+          <MenuItem value={5}>5</MenuItem>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={20}>20</MenuItem>
           <MenuItem value={50}>50</MenuItem>
