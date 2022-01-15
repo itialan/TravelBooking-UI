@@ -2,12 +2,12 @@ import * as actions from './tour.actions';
 
 import { getTourList } from '../../apis/tour.api';
 
-export const fetchTourList = () => {
+export const fetchTourList = (query = '') => {
   return async (dispatch) => {
     dispatch(actions.getTourListStart());
 
     try {
-      const response = await getTourList();
+      const response = await getTourList(query);
       if (response.data) {
         dispatch(actions.getTourListSuccess(response.data.data));
       }

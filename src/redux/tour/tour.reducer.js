@@ -2,6 +2,7 @@ import TourActionTypes from './tour.types';
 
 const INITIAL_STATE = {
   tours: [],
+  totalTours: 0,
   isFetching: false,
   errorMessage: undefined,
 };
@@ -17,7 +18,8 @@ const tourReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        tours: action.payload,
+        tours: action.payload.data,
+        totalTours: action.payload.total,
       };
     case TourActionTypes.GET_TOUR_LIST_FAILURE:
       return {

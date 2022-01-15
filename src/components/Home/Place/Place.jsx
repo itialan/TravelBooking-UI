@@ -1,14 +1,20 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+// thunks
 import { fetchTourList } from '../../../redux/tour/tour.thunks';
 
+// components
 import PlaceSingle from '../PlaceSingle/PlaceSingle';
 
+// selectors
+import { tourSelector } from '../../../selectors/tour.selector';
+
+// styles
 import styles from './Place.module.scss';
 
 const Place = () => {
-  const tours = useSelector((state) => state.tour.tours);
+  const tours = useSelector(tourSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
