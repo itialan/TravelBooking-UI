@@ -49,6 +49,7 @@ const TourAdd = () => {
   const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
 
   console.log(imageCover);
+  console.log(process.env.REACT_APP_MAPBOX_TOKEN);
 
   const handleCloseDialogAddHotel = () => {
     setIsOpenAddHotel(false);
