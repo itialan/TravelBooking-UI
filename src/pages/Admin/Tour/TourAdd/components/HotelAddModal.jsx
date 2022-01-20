@@ -62,7 +62,7 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
             <Grid item xs={6}>
               <FormControl fullWidth variant='outlined'>
                 <InputLabel id='demo-simple-select-outlined-label'>
-                  Start Day
+                  Nights
                 </InputLabel>
                 <Select
                   fullWidth
