@@ -1,7 +1,7 @@
-const TourActionTypes = {
+const TourListActionTypes = {
   GET_TOUR_LIST_START: 'GET_TOUR_LIST_START',
   GET_TOUR_LIST_SUCCESS: 'GET_TOUR_LIST_SUCCESS',
   GET_TOUR_LIST_FAILURE: 'GET_TOUR_LIST_FAILURE',
 };
 
-export default TourActionTypes;
+export default TourListActionTypes;

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // thunks
-import { fetchTourList } from '../../../redux/tour/tour.thunks';
+import { fetchTourList } from '../../../redux/tour/tourList/tourList.thunks';
 
 // components
 import PlaceSingle from '../PlaceSingle/PlaceSingle';

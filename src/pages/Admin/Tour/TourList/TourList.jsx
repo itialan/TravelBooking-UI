@@ -24,7 +24,7 @@ import useStyles from './styles';
 import { handlePrice } from '../../../../helpers/string';
 
 // thunks
-import { fetchTourList } from '../../../../redux/tour/tour.thunks';
+import { fetchTourList } from '../../../../redux/tour/tourList/tourList.thunks';
 
 // selectors
 import {

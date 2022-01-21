@@ -54,8 +54,19 @@ const TourAdd = () => {
     description: '',
     imageCover: [],
     images: [],
-    locations: [],
-    hotels: [],
+    locations: [
+      {
+        type: 'Point',
+        coordinates: [105.834721, 21.036096],
+        address: 'Lăng Bác',
+        description:
+          'Quý khách thăm khu di tích Hồ Chí Minh (Lăng Chủ Tịch HCM, nhà sàn, ao cá, chùa Một Cột).',
+        day: 1,
+      },
+    ],
+    hotels: [
+      { name: 'Plaza', address: 'B1A, Phố Cổ, Hà Nội', startDay: 1, nights: 1 },
+    ],
   };
 
   const classes = useStyles();

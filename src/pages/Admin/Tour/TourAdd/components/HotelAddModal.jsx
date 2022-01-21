@@ -73,7 +73,7 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
                   <MenuItem value=''>
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value='1'>Day 1</MenuItem>
+                  <MenuItem value='1'>1 </MenuItem>
                   <MenuItem value='2'>Day 2</MenuItem>
                   <MenuItem value='3'>Day 3</MenuItem>
                 </Select>
