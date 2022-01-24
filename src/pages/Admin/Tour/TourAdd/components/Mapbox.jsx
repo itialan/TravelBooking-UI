@@ -9,7 +9,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const useStyles = makeStyles((theme) => ({
   mapContainer: {
-    height: 375,
+    height: 325,
   },
 }));
 

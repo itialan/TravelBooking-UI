@@ -29,7 +29,7 @@ import { fetchTourList } from '../../../../redux/tour/tourList/tourList.thunks';
 // selectors
 import {
   totalTourSelector,
-  tourSelector,
+  tourListSelector,
 } from '../../../../selectors/tour.selector';
 
 // components
@@ -42,7 +42,7 @@ const TourList = () => {
   const { page, perPage, changePage, changePerPage } = usePagination();
   const history = useHistory();
   const classes = useStyles();
-  const tours = useSelector(tourSelector);
+  const tours = useSelector(tourListSelector);
   const totalTours = useSelector(totalTourSelector);
   const totalPage = Math.ceil(totalTours / perPage);
   const dispatch = useDispatch();

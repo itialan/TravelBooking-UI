@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState, memo, useRef } from 'react';
 
 // marerial core
 import Button from '@material-ui/core/Button';
@@ -13,7 +13,45 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
+// libs
+import cuid from 'cuid';
+
+const HotelAddModal = ({
+  isOpen,
+  selectedHotel = null,
+  handleCloseDialogAddHotel,
+  setHotels,
+}) => {
+  const initialValues = selectedHotel ?? {
+    _id: cuid(),
+    name: '',
+    address: '',
+    startDay: '',
+    nights: '',
+  };
+  const temp = useRef(0);
+
+  console.log('check selected values: ', initialValues);
+
+  const [hotel, setHotel] = useState(initialValues);
+
+  useEffect(() => {
+    console.log('useEffect');
+    setHotel({ ...initialValues });
+  }, [isOpen]);
+
+  console.log('hotel: ', hotel);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setHotel({ ...hotel, [name]: value });
+  };
+
+  const handleSubmit = () => {
+    setHotels(hotel);
+    handleCloseDialogAddHotel();
+  };
+
   return (
     <>
       <Dialog
@@ -24,23 +62,36 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
       >
         <DialogContent>
           <Typography variant='h6' color='textPrimary'>
-            Add Hotel
+            Add Hotel {temp.current++}
           </Typography>
           <br />
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth id='title' label='Name' variant='outlined' />
+              <TextField
+                fullWidth
+                id='title'
+                label='Name'
+                name='name'
+                size='small'
+                variant='outlined'
+                value={hotel.name}
+                onChange={(e) => handleInputChange(e)}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 id='author'
                 label='Address'
+                name='address'
+                size='small'
                 variant='outlined'
+                value={hotel.address}
+                onChange={(e) => handleInputChange(e)}
               />
             </Grid>
             <Grid item xs={6}>
-              <FormControl fullWidth variant='outlined'>
+              <FormControl size='small' fullWidth variant='outlined'>
                 <InputLabel id='demo-simple-select-outlined-label'>
                   Start Day
                 </InputLabel>
@@ -48,19 +99,22 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
                   fullWidth
                   labelId='demo-simple-select-outlined-label'
                   id='demo-simple-select-outlined'
+                  defaultValue=''
                   label='Severity'
+                  name='startDay'
+                  value={hotel.startDay}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <MenuItem value=''>
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value='1'>Day 1</MenuItem>
-                  <MenuItem value='2'>Day 2</MenuItem>
-                  <MenuItem value='3'>Day 3</MenuItem>
+                  {[...Array(31)].map((e, i) => (
+                    <MenuItem key={i} value={i + 1}>
+                      Day {i + 1}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <FormControl fullWidth variant='outlined'>
+              <FormControl size='small' fullWidth variant='outlined'>
                 <InputLabel id='demo-simple-select-outlined-label'>
                   Nights
                 </InputLabel>
@@ -68,14 +122,17 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
                   fullWidth
                   labelId='demo-simple-select-outlined-label'
                   id='demo-simple-select-outlined'
+                  defaultValue=''
                   label='Severity'
+                  value={hotel.nights}
+                  name='nights'
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <MenuItem value=''>
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value='1'>1 </MenuItem>
-                  <MenuItem value='2'>Day 2</MenuItem>
-                  <MenuItem value='3'>Day 3</MenuItem>
+                  {[...Array(31)].map((e, i) => (
+                    <MenuItem key={i} value={i + 1}>
+                      {i + 1} Night(s)
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -85,7 +142,12 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
           <Button onClick={handleCloseDialogAddHotel} color='primary'>
             Close
           </Button>
-          <Button variant='contained' color='primary' size='small'>
+          <Button
+            variant='contained'
+            color='primary'
+            size='small'
+            onClick={handleSubmit}
+          >
             Add
           </Button>
         </DialogActions>
@@ -94,4 +156,4 @@ const HotelAddModal = ({ isOpen, handleCloseDialogAddHotel }) => {
   );
 };
 
-export default HotelAddModal;
+export default memo(HotelAddModal);

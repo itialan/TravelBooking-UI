@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // material core
@@ -22,8 +22,6 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import SaveIcon from '@material-ui/icons/Save';
-import CancelIcon from '@material-ui/icons/Close';
 
 // FilePond
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -34,10 +32,17 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 import PostImage from '../../../../components/Common/PostImage/PostImage';
 
+// selectors
+import { routeSelector } from '../../../../selectors/route.selector';
+
 // styles
 import useStyles from './styles';
 import HotelAddModal from './components/HotelAddModal';
 import LocationAddModal from './components/LocationAddModal';
+
+// thunks
+import { createTourItem } from '../../../../redux/tour/tourItem/tourItem.thunks';
+import { fetchDestinationList } from '../../../../redux/destination/destination.thunks';
 
 // FilePond: Register the plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
@@ -54,52 +59,95 @@ const TourAdd = () => {
     description: '',
     imageCover: [],
     images: [],
-    locations: [
-      {
-        type: 'Point',
-        coordinates: [105.834721, 21.036096],
-        address: 'Lăng Bác',
-        description:
-          'Quý khách thăm khu di tích Hồ Chí Minh (Lăng Chủ Tịch HCM, nhà sàn, ao cá, chùa Một Cột).',
-        day: 1,
-      },
-    ],
-    hotels: [
-      { name: 'Plaza', address: 'B1A, Phố Cổ, Hà Nội', startDay: 1, nights: 1 },
-    ],
+    locations: [],
+    hotels: [],
   };
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [isOpenAddHotel, setIsOpenAddHotel] = useState(false);
-  const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
+  const routes = useSelector(routeSelector);
+
+  const [isOpenAddHotel, setIsOpenAddHotel] = useState({
+    isOpen: false,
+    currHotel: null,
+  });
+  const [isOpenAddLocation, setIsOpenAddLocation] = useState({
+    isOpen: false,
+    currLocation: null,
+  });
   const [imageCover, setImageCover] = useState([]);
   const [images, setImages] = useState([]);
-  // const [hotels, setHotels] = useState([]);
-  // const [locations, setLocations] = useState([]);
   const [values, setValues] = useState(initialValues);
 
-  const handleCloseDialogAddHotel = () => {
-    setIsOpenAddHotel(false);
-  };
+  function handleCloseDialogAddHotel() {
+    setIsOpenAddHotel({ ...isOpenAddHotel, isOpen: false });
+  }
 
   const handleCloseDialogAddLocation = () => {
-    setIsOpenAddLocation(false);
+    setIsOpenAddLocation({ ...isOpenAddLocation, isOpen: false });
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    const uploadImages = images?.map((img) => img.file);
-    console.log(imageCover);
-    console.log(uploadImages);
-    console.log(values);
-  };
+  console.log('asd');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
     console.log(values);
   };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const uploadImages = images?.map((img) => img.file);
+    console.log(values);
+    //dispatch(createTourItem(values, imageCover[0].file, uploadImages));
+  };
+
+  const showEditHotelModal = (hotelId) => {
+    console.log('curretHotel: ', hotelId);
+    const selectedHotel = values.hotels.find((hotel) => hotel._id === hotelId);
+    setIsOpenAddHotel({
+      ...isOpenAddHotel,
+      isOpen: true,
+      currHotel: selectedHotel,
+    });
+  };
+
+  const showEditLocationModal = (locationId) => {
+    const selectedLocation = values.locations.find(
+      (location) => location._id === locationId
+    );
+    setIsOpenAddLocation({
+      ...isOpenAddLocation,
+      isOpen: true,
+      currLocation: selectedLocation,
+    });
+  };
+
+  // Using for CRUD advande fields (hotels, locations)
+  function addNewField(fieldName, value, sortName) {
+    return [...values[fieldName], value].sort((a, b) =>
+      a[sortName] < b[sortName] ? -1 : 1
+    );
+  }
+
+  function updateFieldValue(fieldName, value, sortName) {
+    return [
+      ...values[fieldName].filter((item) => item._id !== value._id),
+      value,
+    ].sort((a, b) => (a[sortName] < b[sortName] ? -1 : 1));
+  }
+
+  function deleteFieldValue(fieldName, id) {
+    console.log(id);
+    setValues({
+      ...values,
+      [fieldName]: [...values[fieldName].filter((item) => item._id !== id)],
+    });
+  }
+
+  useEffect(() => {
+    dispatch(fetchDestinationList());
+  }, [dispatch]);
 
   return (
     <>
@@ -132,8 +180,13 @@ const TourAdd = () => {
                 defaultValue=''
                 onChange={(e) => handleInputChange(e)}
               >
-                <MenuItem value='1'>Da Lat</MenuItem>
-                <MenuItem value='2'>Ha Noi</MenuItem>
+                {routes
+                  ? routes.map((route) => (
+                      <MenuItem key={route.id} value={route.id}>
+                        {`${route.startLocation} - ${route.destination}`}
+                      </MenuItem>
+                    ))
+                  : 'Loading...'}
               </Select>
             </FormControl>
           </Grid>
@@ -164,8 +217,11 @@ const TourAdd = () => {
                 defaultValue=''
                 onChange={(e) => handleInputChange(e)}
               >
-                <MenuItem value='1'>1 days</MenuItem>
-                <MenuItem value='2'>2 days</MenuItem>
+                {[...Array(31)].map((e, i) => (
+                  <MenuItem key={i} value={i + 1}>
+                    {i + 1} days
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -184,8 +240,11 @@ const TourAdd = () => {
                 defaultValue=''
                 onChange={(e) => handleInputChange(e)}
               >
-                <MenuItem value='1'>1 people</MenuItem>
-                <MenuItem value='2'>2 peoples</MenuItem>
+                {[...Array(31)].map((e, i) => (
+                  <MenuItem key={i} value={i + 1}>
+                    {i + 1} people(s)
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -274,7 +333,13 @@ const TourAdd = () => {
               color='primary'
               size='small'
               startIcon={<AddIcon />}
-              onClick={() => setIsOpenAddHotel(true)}
+              onClick={() =>
+                setIsOpenAddHotel({
+                  ...isOpenAddHotel,
+                  isOpen: true,
+                  currHotel: null,
+                })
+              }
             >
               Add Hotel
             </Button>
@@ -294,19 +359,44 @@ const TourAdd = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow key={1}>
-                    <TableCell align='center' component='th' scope='row'>
-                      Plaza
-                    </TableCell>
-                    <TableCell className={classes.name} align='center'>
-                      123, Ha Noi
-                    </TableCell>
-                    <TableCell align='center'>Day 1</TableCell>
-                    <TableCell align='center'>2 days</TableCell>
-                    <TableCell align='center'>
-                      <EditIcon />
-                    </TableCell>
-                  </TableRow>
+                  {values.hotels.length !== 0 ? (
+                    values.hotels.map((hotel) => (
+                      <TableRow key={hotel._id}>
+                        <TableCell align='center' component='th' scope='row'>
+                          {hotel.name}
+                        </TableCell>
+                        <TableCell className={classes.name} align='center'>
+                          {hotel.address}
+                        </TableCell>
+                        <TableCell align='center'>
+                          Day {hotel.startDay}
+                        </TableCell>
+                        <TableCell align='center'>
+                          {hotel.nights} days
+                        </TableCell>
+                        <TableCell align='center'>
+                          <div>
+                            <EditIcon
+                              className={classes.icon}
+                              onClick={() => showEditHotelModal(hotel._id)}
+                            />
+                            <DeleteIcon
+                              className={classes.icon}
+                              onClick={() =>
+                                deleteFieldValue('hotels', hotel._id)
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell align='center' component='th' scope='row'>
+                        Add new hotel
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -322,7 +412,13 @@ const TourAdd = () => {
               color='primary'
               size='small'
               startIcon={<AddIcon />}
-              onClick={() => setIsOpenAddLocation(true)}
+              onClick={() =>
+                setIsOpenAddLocation({
+                  ...isOpenAddLocation,
+                  isOpen: true,
+                  currLocation: null,
+                })
+              }
             >
               Add Location
             </Button>
@@ -334,27 +430,48 @@ const TourAdd = () => {
               <Table aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell align='center'>Location</TableCell>
                     <TableCell align='center'>Address</TableCell>
+                    <TableCell align='center'>Coordinates</TableCell>
                     <TableCell align='center'>Start Day</TableCell>
-                    <TableCell align='center'>Description</TableCell>
                     <TableCell align='center'></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow key={1}>
-                    <TableCell align='center' component='th' scope='row'>
-                      Plaza
-                    </TableCell>
-                    <TableCell className={classes.name} align='center'>
-                      123, Ha Noi
-                    </TableCell>
-                    <TableCell align='center'>Day 1</TableCell>
-                    <TableCell align='center'>2 days</TableCell>
-                    <TableCell align='center'>
-                      <EditIcon />
-                    </TableCell>
-                  </TableRow>
+                  {values.locations.length !== 0 ? (
+                    values.locations.map((location) => (
+                      <TableRow key={1}>
+                        <TableCell align='center' component='th' scope='row'>
+                          {location.address}
+                        </TableCell>
+                        <TableCell className={classes.name} align='center'>
+                          {`${location.coordinates[0]} - ${location.coordinates[1]}`}
+                        </TableCell>
+                        <TableCell align='center'>Day {location.day}</TableCell>
+                        <TableCell align='center'>
+                          <div>
+                            <EditIcon
+                              className={classes.icon}
+                              onClick={() =>
+                                showEditLocationModal(location._id)
+                              }
+                            />
+                            <DeleteIcon
+                              className={classes.icon}
+                              onClick={() =>
+                                deleteFieldValue('locations', location._id)
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell align='center' component='th' scope='row'>
+                        Add new location
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -370,13 +487,31 @@ const TourAdd = () => {
         </Grid>
 
         <HotelAddModal
-          isOpen={isOpenAddHotel}
+          isOpen={isOpenAddHotel.isOpen}
+          selectedHotel={isOpenAddHotel.currHotel}
           handleCloseDialogAddHotel={handleCloseDialogAddHotel}
+          setHotels={(hotel) =>
+            setValues({
+              ...values,
+              hotels: isOpenAddHotel.currHotel
+                ? updateFieldValue('hotels', hotel, 'startDay')
+                : addNewField('hotels', hotel, 'startDay'),
+            })
+          }
         />
 
         <LocationAddModal
-          isOpen={isOpenAddLocation}
+          isOpen={isOpenAddLocation.isOpen}
+          selectedLocation={isOpenAddLocation.currLocation}
           handleCloseDialogAddLocation={handleCloseDialogAddLocation}
+          setLocations={(location) =>
+            setValues({
+              ...values,
+              locations: isOpenAddLocation.currLocation
+                ? updateFieldValue('locations', location, 'day')
+                : addNewField('locations', location, 'day'),
+            })
+          }
         />
       </form>
     </>

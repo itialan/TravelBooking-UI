@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // material core
 import Button from '@material-ui/core/Button';
@@ -16,11 +16,44 @@ import Select from '@material-ui/core/Select';
 // components
 import Mapbox from './Mapbox';
 
+// libs
+import cuid from 'cuid';
+
 // styles
 import useStyles from '../styles';
 
-const LocationAddModal = ({ isOpen, handleCloseDialogAddLocation }) => {
+const LocationAddModal = ({
+  isOpen,
+  selectedLocation = null,
+  handleCloseDialogAddLocation,
+  setLocations,
+}) => {
+  const initialValues = selectedLocation ?? {
+    _id: cuid(),
+    type: '',
+    coordinates: [],
+    address: '',
+    description: '',
+    day: '',
+  };
+
   const classes = useStyles();
+  const [location, setLocation] = useState(initialValues);
+
+  useEffect(() => {
+    setLocation({ ...initialValues });
+  }, [isOpen]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLocation({ ...location, [name]: value });
+    console.log(location);
+  };
+
+  const handleSubmit = () => {
+    setLocations(location);
+    handleCloseDialogAddLocation();
+  };
 
   return (
     <>
@@ -41,38 +74,44 @@ const LocationAddModal = ({ isOpen, handleCloseDialogAddLocation }) => {
                 <TextField
                   fullWidth
                   size='small'
-                  id='place'
-                  label='Place'
-                  variant='outlined'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  size='small'
                   id='address'
                   label='Address'
+                  name='address'
+                  value={location.address}
                   variant='outlined'
+                  onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   fullWidth
                   size='small'
-                  disabled
                   id='latitude'
                   label='Latitude'
+                  value={location.coordinates[0]}
                   variant='outlined'
+                  onChange={(e) =>
+                    setLocation({
+                      ...location,
+                      coordinates: [e.target.value, location.coordinates[1]],
+                    })
+                  }
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   fullWidth
                   size='small'
-                  disabled
                   id='longitude'
                   label='Longitude'
+                  value={location.coordinates[1]}
                   variant='outlined'
+                  onChange={(e) =>
+                    setLocation({
+                      ...location,
+                      coordinates: [location.coordinates[0], e.target.value],
+                    })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -85,13 +124,16 @@ const LocationAddModal = ({ isOpen, handleCloseDialogAddLocation }) => {
                     labelId='demo-simple-select-outlined-label'
                     id='demo-simple-select-outlined'
                     label='Severity'
+                    name='day'
+                    value={location.day}
+                    defaultValue=''
+                    onChange={(e) => handleInputChange(e)}
                   >
-                    <MenuItem value=''>
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value='Day 1'>Day 1</MenuItem>
-                    <MenuItem value='Day 2'>Day 2</MenuItem>
-                    <MenuItem value='Day 3'>Day 3</MenuItem>
+                    {[...Array(31)].map((e, i) => (
+                      <MenuItem key={i} value={i + 1}>
+                        Day {i + 1}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -105,7 +147,10 @@ const LocationAddModal = ({ isOpen, handleCloseDialogAddLocation }) => {
                   rows={5}
                   fullWidth
                   variant='outlined'
+                  name='description'
+                  value={location.description}
                   placeholder='Leave a message'
+                  onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
             </Grid>
@@ -120,7 +165,12 @@ const LocationAddModal = ({ isOpen, handleCloseDialogAddLocation }) => {
           <Button onClick={handleCloseDialogAddLocation} color='primary'>
             Close
           </Button>
-          <Button variant='contained' color='primary' size='small'>
+          <Button
+            variant='contained'
+            color='primary'
+            size='small'
+            onClick={handleSubmit}
+          >
             Add
           </Button>
         </DialogActions>

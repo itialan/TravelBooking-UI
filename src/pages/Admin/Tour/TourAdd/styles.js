@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   modalAddHotel: {
     marginRight: 10,
   },
+  icon: {
+    cursor: 'pointer',
+    fontSize: 20,
+  },
 }));
 
 export default useStyles;

@@ -1,4 +1,4 @@
-import TourActionTypes from './tourList.types';
+import TourListActionTypes from './tourList.types';
 
 const INITIAL_STATE = {
   tours: [],
@@ -9,21 +9,19 @@ const INITIAL_STATE = {
 
 const tourListReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case TourActionTypes.GET_TOUR_LIST_START:
-    case TourActionTypes.ADD_TOUR_START:
+    case TourListActionTypes.GET_TOUR_LIST_START:
       return {
         ...state,
         isFetching: true,
       };
-    case TourActionTypes.GET_TOUR_LIST_SUCCESS:
+    case TourListActionTypes.GET_TOUR_LIST_SUCCESS:
       return {
         ...state,
         isFetching: false,
         tours: action.payload.data,
         totalTours: action.payload.total,
       };
-    case TourActionTypes.GET_TOUR_LIST_FAILURE:
-    case TourActionTypes.ADD_TOUR_FAILURE:
+    case TourListActionTypes.GET_TOUR_LIST_FAILURE:
       return {
         ...state,
         isFetching: false,
