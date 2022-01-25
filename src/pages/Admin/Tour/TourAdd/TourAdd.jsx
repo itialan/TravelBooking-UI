@@ -439,7 +439,7 @@ const TourAdd = () => {
                 <TableBody>
                   {values.locations.length !== 0 ? (
                     values.locations.map((location) => (
-                      <TableRow key={1}>
+                      <TableRow key={location._id}>
                         <TableCell align='center' component='th' scope='row'>
                           {location.address}
                         </TableCell>

@@ -35,8 +35,8 @@ const LocationAddModal = ({
 }) => {
   const initialValues = selectedLocation ?? {
     _id: cuid(),
-    type: '',
-    coordinates: [],
+    type: 'Point',
+    coordinates: [0, 0],
     address: '',
     description: '',
     day: '',
@@ -44,13 +44,11 @@ const LocationAddModal = ({
 
   const classes = useStyles();
   const [location, setLocation] = useState(initialValues);
-  const places = [
-    { address: 'The Shawshank Redemption', coordinates: '123.123' },
-    { address: 'The Godfather', coordinates: '123.123' },
-    { address: 'The Godfather: Part II', coordinates: '312.321' },
-  ];
-  // const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState([
+    { place_name: location.address, center: location.coordinates },
+  ]);
 
+  console.log(places);
   useEffect(() => {
     setLocation({ ...initialValues });
   }, [isOpen]);
@@ -64,6 +62,7 @@ const LocationAddModal = ({
   const fetchPlaceFromMapbox = async (place) => {
     const result = await getPlaces(place);
     console.log(result.data.features);
+    setPlaces(result.data.features);
   };
 
   // invoked fetching Mapbox API after 0.5 second
@@ -71,6 +70,8 @@ const LocationAddModal = ({
 
   const onKeyUpSearch = (e) => {
     const place = e.target.value;
+    if (place === '') return;
+
     delayedFetching(place);
   };
 
@@ -98,11 +99,25 @@ const LocationAddModal = ({
                 <Autocomplete
                   id='address-search'
                   freeSolo
-                  options={places.map((option) => option.address)}
+                  value={location.address}
+                  onChange={(event, newValue) => {
+                    const address = newValue?.place_name || '';
+                    const coordinates = newValue?.center || [0, 0];
+                    setLocation({
+                      ...location,
+                      address,
+                      coordinates,
+                    });
+                  }}
+                  options={places}
+                  getOptionLabel={(option) => {
+                    // Regular option
+                    return option.place_name ?? option;
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      value={location.address}
+                      id='address'
                       label='address'
                       name='address'
                       size='small'
@@ -111,16 +126,6 @@ const LocationAddModal = ({
                     />
                   )}
                 />
-                {/* <TextField
-                  fullWidth
-                  size='small'
-                  id='address'
-                  label='Address'
-                  name='address'
-                  value={location.address}
-                  variant='outlined'
-                  onChange={(e) => handleInputChange(e)}
-                /> */}
               </Grid>
               <Grid item xs={6}>
                 <TextField
@@ -128,14 +133,9 @@ const LocationAddModal = ({
                   size='small'
                   id='latitude'
                   label='Latitude'
+                  disabled
                   value={location.coordinates[0]}
                   variant='outlined'
-                  onChange={(e) =>
-                    setLocation({
-                      ...location,
-                      coordinates: [e.target.value, location.coordinates[1]],
-                    })
-                  }
                 />
               </Grid>
               <Grid item xs={6}>
@@ -144,14 +144,9 @@ const LocationAddModal = ({
                   size='small'
                   id='longitude'
                   label='Longitude'
+                  disabled
                   value={location.coordinates[1]}
                   variant='outlined'
-                  onChange={(e) =>
-                    setLocation({
-                      ...location,
-                      coordinates: [location.coordinates[0], e.target.value],
-                    })
-                  }
                 />
               </Grid>
               <Grid item xs={12}>
