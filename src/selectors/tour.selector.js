@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
 
-export const tourSelector = createSelector(
-  (state) => state.tour,
-  (tour) => tour.tours
+export const tourListSelector = createSelector(
+  (state) => state.tourList,
+  (tourList) => tourList.tours
 );
 
 export const totalTourSelector = createSelector(
-  (state) => state.tour,
-  (tour) => tour.totalTours
+  (state) => state.tourList,
+  (tourList) => tourList.totalTours
 );

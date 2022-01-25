@@ -1,6 +1,7 @@
-import * as actions from './tour.actions';
+import * as actions from './tourList.actions';
 
-import { getTourList } from '../../apis/tour.api';
+// apis
+import { getTourList } from '../../../apis/tour.api';
 
 export const fetchTourList = (query = '') => {
   return async (dispatch) => {

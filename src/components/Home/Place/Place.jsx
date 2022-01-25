@@ -2,19 +2,19 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // thunks
-import { fetchTourList } from '../../../redux/tour/tour.thunks';
+import { fetchTourList } from '../../../redux/tour/tourList/tourList.thunks';
 
 // components
 import PlaceSingle from '../PlaceSingle/PlaceSingle';
 
 // selectors
-import { tourSelector } from '../../../selectors/tour.selector';
+import { tourListSelector } from '../../../selectors/tour.selector';
 
 // styles
 import styles from './Place.module.scss';
 
 const Place = () => {
-  const tours = useSelector(tourSelector);
+  const tours = useSelector(tourListSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
