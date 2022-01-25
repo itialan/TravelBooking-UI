@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState, memo, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // marerial core
 import Button from '@material-ui/core/Button';
@@ -30,6 +31,7 @@ const HotelAddModal = ({
     nights: '',
   };
   const temp = useRef(0);
+  const hotels = [];
 
   console.log('check selected values: ', initialValues);
 
@@ -67,6 +69,28 @@ const HotelAddModal = ({
           <br />
           <Grid container spacing={2}>
             <Grid item xs={12}>
+              <FormControl size='small' variant='outlined' fullWidth>
+                <InputLabel id='demo-simple-select-outlined-label'>
+                  Name
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-outlined-label'
+                  id='demo-simple-select-outlined'
+                  label='Name'
+                  fullWidth
+                  name='Name'
+                  defaultValue=''
+                  onChange={(e) => handleInputChange(e)}
+                >
+                  {hotels
+                    ? hotels.map((hol) => (
+                        <MenuItem key={hol.id} value={hol.name}>
+                          {hol.name}
+                        </MenuItem>
+                      ))
+                    : 'Loading...'}
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 id='title'

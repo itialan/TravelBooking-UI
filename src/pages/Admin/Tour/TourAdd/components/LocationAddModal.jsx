@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 // material core
 import Button from '@material-ui/core/Button';
@@ -13,14 +13,19 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+// material labs
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 // components
 import Mapbox from './Mapbox';
 
 // libs
 import cuid from 'cuid';
+import _ from 'lodash';
 
 // styles
 import useStyles from '../styles';
+import { getPlaces } from '../../../../../apis/mapbox.api';
 
 const LocationAddModal = ({
   isOpen,
@@ -39,6 +44,12 @@ const LocationAddModal = ({
 
   const classes = useStyles();
   const [location, setLocation] = useState(initialValues);
+  const places = [
+    { address: 'The Shawshank Redemption', coordinates: '123.123' },
+    { address: 'The Godfather', coordinates: '123.123' },
+    { address: 'The Godfather: Part II', coordinates: '312.321' },
+  ];
+  // const [places, setPlaces] = useState([]);
 
   useEffect(() => {
     setLocation({ ...initialValues });
@@ -48,6 +59,19 @@ const LocationAddModal = ({
     const { name, value } = e.target;
     setLocation({ ...location, [name]: value });
     console.log(location);
+  };
+
+  const fetchPlaceFromMapbox = async (place) => {
+    const result = await getPlaces(place);
+    console.log(result.data.features);
+  };
+
+  // invoked fetching Mapbox API after 0.5 second
+  const delayedFetching = _.debounce(fetchPlaceFromMapbox, 500);
+
+  const onKeyUpSearch = (e) => {
+    const place = e.target.value;
+    delayedFetching(place);
   };
 
   const handleSubmit = () => {
@@ -71,7 +95,23 @@ const LocationAddModal = ({
           <Grid container spacing={2}>
             <Grid container item xs={6} spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <Autocomplete
+                  id='address-search'
+                  freeSolo
+                  options={places.map((option) => option.address)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      value={location.address}
+                      label='address'
+                      name='address'
+                      size='small'
+                      variant='outlined'
+                      onKeyUp={(e) => onKeyUpSearch(e)}
+                    />
+                  )}
+                />
+                {/* <TextField
                   fullWidth
                   size='small'
                   id='address'
@@ -80,7 +120,7 @@ const LocationAddModal = ({
                   value={location.address}
                   variant='outlined'
                   onChange={(e) => handleInputChange(e)}
-                />
+                /> */}
               </Grid>
               <Grid item xs={6}>
                 <TextField
