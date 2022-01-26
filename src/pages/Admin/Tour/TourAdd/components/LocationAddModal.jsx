@@ -23,6 +23,9 @@ import Mapbox from './Mapbox';
 import cuid from 'cuid';
 import _ from 'lodash';
 
+// hooks
+import useMap from '../../../../../hooks/useMap';
+
 // styles
 import useStyles from '../styles';
 import { getPlaces } from '../../../../../apis/mapbox.api';
@@ -44,9 +47,8 @@ const LocationAddModal = ({
 
   const classes = useStyles();
   const [location, setLocation] = useState(initialValues);
-  const [places, setPlaces] = useState([
-    { place_name: location.address, center: location.coordinates },
-  ]);
+  const [places, setPlaces] = useState([]);
+  const { coordinates, zoom, changeCoordinates, changeZoom } = useMap();
 
   console.log(places);
   useEffect(() => {
@@ -61,7 +63,6 @@ const LocationAddModal = ({
 
   const fetchPlaceFromMapbox = async (place) => {
     const result = await getPlaces(place);
-    console.log(result.data.features);
     setPlaces(result.data.features);
   };
 
@@ -103,11 +104,17 @@ const LocationAddModal = ({
                   onChange={(event, newValue) => {
                     const address = newValue?.place_name || '';
                     const coordinates = newValue?.center || [0, 0];
+                    const zoom = newValue?.place_type[0] || 9;
+
                     setLocation({
                       ...location,
                       address,
                       coordinates,
                     });
+
+                    // Mapbox states
+                    changeCoordinates(coordinates);
+                    changeZoom(zoom);
                   }}
                   options={places}
                   getOptionLabel={(option) => {
@@ -191,7 +198,12 @@ const LocationAddModal = ({
             </Grid>
             <Grid container item xs={6} spacing={2}>
               <Grid item xs={12}>
-                <Mapbox />
+                <Mapbox
+                  coordinates={coordinates}
+                  zoom={zoom}
+                  changeCoordinates={changeCoordinates}
+                  changeZoom={changeZoom}
+                />
               </Grid>
             </Grid>
           </Grid>

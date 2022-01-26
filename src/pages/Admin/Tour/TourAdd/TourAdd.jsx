@@ -431,7 +431,6 @@ const TourAdd = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell align='center'>Address</TableCell>
-                    <TableCell align='center'>Coordinates</TableCell>
                     <TableCell align='center'>Start Day</TableCell>
                     <TableCell align='center'></TableCell>
                   </TableRow>
@@ -442,9 +441,6 @@ const TourAdd = () => {
                       <TableRow key={location._id}>
                         <TableCell align='center' component='th' scope='row'>
                           {location.address}
-                        </TableCell>
-                        <TableCell className={classes.name} align='center'>
-                          {`${location.coordinates[0]} - ${location.coordinates[1]}`}
                         </TableCell>
                         <TableCell align='center'>Day {location.day}</TableCell>
                         <TableCell align='center'>
