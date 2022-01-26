@@ -26,8 +26,7 @@ import _ from 'lodash';
 // hooks
 import useMap from '../../../../../hooks/useMap';
 
-// styles
-import useStyles from '../styles';
+// apis
 import { getPlaces } from '../../../../../apis/mapbox.api';
 
 const LocationAddModal = ({
@@ -45,7 +44,6 @@ const LocationAddModal = ({
     day: '',
   };
 
-  const classes = useStyles();
   const [location, setLocation] = useState(initialValues);
   const [places, setPlaces] = useState([]);
   const { coordinates, zoom, changeCoordinates, changeZoom } = useMap();
@@ -198,12 +196,7 @@ const LocationAddModal = ({
             </Grid>
             <Grid container item xs={6} spacing={2}>
               <Grid item xs={12}>
-                <Mapbox
-                  coordinates={coordinates}
-                  zoom={zoom}
-                  changeCoordinates={changeCoordinates}
-                  changeZoom={changeZoom}
-                />
+                <Mapbox coordinates={coordinates} zoom={zoom} />
               </Grid>
             </Grid>
           </Grid>

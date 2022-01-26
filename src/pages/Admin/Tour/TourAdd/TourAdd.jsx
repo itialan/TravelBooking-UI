@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // material core
@@ -79,9 +79,9 @@ const TourAdd = () => {
   const [images, setImages] = useState([]);
   const [values, setValues] = useState(initialValues);
 
-  function handleCloseDialogAddHotel() {
+  const handleCloseDialogAddHotel = useCallback(() => {
     setIsOpenAddHotel({ ...isOpenAddHotel, isOpen: false });
-  }
+  }, [isOpenAddHotel]);
 
   const handleCloseDialogAddLocation = () => {
     setIsOpenAddLocation({ ...isOpenAddLocation, isOpen: false });
@@ -124,18 +124,24 @@ const TourAdd = () => {
   };
 
   // Using for CRUD advande fields (hotels, locations)
-  function addNewField(fieldName, value, sortName) {
-    return [...values[fieldName], value].sort((a, b) =>
-      a[sortName] < b[sortName] ? -1 : 1
-    );
-  }
+  const addNewField = useCallback(
+    (fieldName, value, sortName) => {
+      return [...values[fieldName], value].sort((a, b) =>
+        a[sortName] < b[sortName] ? -1 : 1
+      );
+    },
+    [values]
+  );
 
-  function updateFieldValue(fieldName, value, sortName) {
-    return [
-      ...values[fieldName].filter((item) => item._id !== value._id),
-      value,
-    ].sort((a, b) => (a[sortName] < b[sortName] ? -1 : 1));
-  }
+  const updateFieldValue = useCallback(
+    (fieldName, value, sortName) => {
+      return [
+        ...values[fieldName].filter((item) => item._id !== value._id),
+        value,
+      ].sort((a, b) => (a[sortName] < b[sortName] ? -1 : 1));
+    },
+    [values]
+  );
 
   function deleteFieldValue(fieldName, id) {
     console.log(id);
@@ -144,6 +150,17 @@ const TourAdd = () => {
       [fieldName]: [...values[fieldName].filter((item) => item._id !== id)],
     });
   }
+
+  const setHotelValue = useCallback(
+    (hotel) =>
+      setValues({
+        ...values,
+        hotels: isOpenAddHotel.currHotel
+          ? updateFieldValue('hotels', hotel, 'startDay')
+          : addNewField('hotels', hotel, 'startDay'),
+      }),
+    [values, addNewField, isOpenAddHotel.currHotel, updateFieldValue]
+  );
 
   useEffect(() => {
     dispatch(fetchDestinationList());
@@ -486,14 +503,7 @@ const TourAdd = () => {
           isOpen={isOpenAddHotel.isOpen}
           selectedHotel={isOpenAddHotel.currHotel}
           handleCloseDialogAddHotel={handleCloseDialogAddHotel}
-          setHotels={(hotel) =>
-            setValues({
-              ...values,
-              hotels: isOpenAddHotel.currHotel
-                ? updateFieldValue('hotels', hotel, 'startDay')
-                : addNewField('hotels', hotel, 'startDay'),
-            })
-          }
+          setHotels={setHotelValue}
         />
 
         <LocationAddModal
