@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 
 // material core
 import Button from '@material-ui/core/Button';
@@ -48,7 +48,6 @@ const LocationAddModal = ({
   const [places, setPlaces] = useState([]);
   const { coordinates, zoom, changeCoordinates, changeZoom } = useMap();
 
-  console.log(places);
   useEffect(() => {
     setLocation({ ...initialValues });
   }, [isOpen]);
@@ -56,7 +55,6 @@ const LocationAddModal = ({
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLocation({ ...location, [name]: value });
-    console.log(location);
   };
 
   const fetchPlaceFromMapbox = async (place) => {
@@ -219,4 +217,4 @@ const LocationAddModal = ({
   );
 };
 
-export default LocationAddModal;
+export default memo(LocationAddModal);

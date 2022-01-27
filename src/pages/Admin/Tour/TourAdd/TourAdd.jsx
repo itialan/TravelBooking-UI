@@ -18,7 +18,6 @@ import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 
 // material icons
-import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
@@ -83,9 +82,9 @@ const TourAdd = () => {
     setIsOpenAddHotel({ ...isOpenAddHotel, isOpen: false });
   }, [isOpenAddHotel]);
 
-  const handleCloseDialogAddLocation = () => {
+  const handleCloseDialogAddLocation = useCallback(() => {
     setIsOpenAddLocation({ ...isOpenAddLocation, isOpen: false });
-  };
+  }, [isOpenAddLocation]);
 
   console.log('asd');
 
@@ -160,6 +159,17 @@ const TourAdd = () => {
           : addNewField('hotels', hotel, 'startDay'),
       }),
     [values, addNewField, isOpenAddHotel.currHotel, updateFieldValue]
+  );
+
+  const setLocationValue = useCallback(
+    (location) =>
+      setValues({
+        ...values,
+        locations: isOpenAddLocation.currLocation
+          ? updateFieldValue('locations', location, 'day')
+          : addNewField('locations', location, 'day'),
+      }),
+    [values, addNewField, isOpenAddLocation.currLocation, updateFieldValue]
   );
 
   useEffect(() => {
@@ -510,14 +520,7 @@ const TourAdd = () => {
           isOpen={isOpenAddLocation.isOpen}
           selectedLocation={isOpenAddLocation.currLocation}
           handleCloseDialogAddLocation={handleCloseDialogAddLocation}
-          setLocations={(location) =>
-            setValues({
-              ...values,
-              locations: isOpenAddLocation.currLocation
-                ? updateFieldValue('locations', location, 'day')
-                : addNewField('locations', location, 'day'),
-            })
-          }
+          setLocations={setLocationValue}
         />
       </form>
     </>

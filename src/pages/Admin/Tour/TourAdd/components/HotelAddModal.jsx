@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, memo, useRef } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 
 // marerial core
 import Button from '@material-ui/core/Button';
@@ -29,20 +29,10 @@ const HotelAddModal = ({
     startDay: '',
     nights: '',
   };
-  const temp = useRef(0);
-
-  console.log('check selected values: ', initialValues);
-  console.log('-----');
-  console.log('isOpen:', isOpen);
-  console.log('selectedHotel:', selectedHotel);
-  console.log('handleCloseDiaglogAddHotel:', handleCloseDialogAddHotel);
-  console.log('setHotels:', setHotels);
-  console.log('-----');
 
   const [hotel, setHotel] = useState(initialValues);
 
   useEffect(() => {
-    console.log('useEffect');
     setHotel({ ...initialValues });
   }, [isOpen]);
 
@@ -66,7 +56,7 @@ const HotelAddModal = ({
       >
         <DialogContent>
           <Typography variant='h6' color='textPrimary'>
-            Add Hotel {temp.current++}
+            Add Hotel
           </Typography>
           <br />
           <Grid container spacing={2}>
