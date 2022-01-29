@@ -7,6 +7,7 @@ import { ROLE } from '../constants/roles';
 
 // layouts
 import AdminLayout from '../layouts/Admin/MainLayout/AdminLayout';
+import MainLayout from '../layouts/Home/MainLayout/MainLayout';
 
 // guards
 import AuthGuard from '../guards/AuthGuard';
@@ -17,6 +18,7 @@ import RoleRoute from './RoleRoute';
 const Home = lazy(() => import('../pages/Home/Home'));
 const SignIn = lazy(() => import('../pages/SignInAndSignUp/SignIn/SignIn'));
 const SignUp = lazy(() => import('../pages/SignInAndSignUp/SignUp/SignUp'));
+const TourDetail = lazy(() => import('../pages/Tour/TourDetail/TourDetail'));
 const Dashboard = lazy(() => import('../pages/Admin/Dashboard/Dashboard'));
 const TourList = lazy(() => import('../pages/Admin/Tour/TourList/TourList'));
 const TourAdd = lazy(() => import('../pages/Admin/Tour/TourAdd/TourAdd'));
@@ -46,6 +48,7 @@ const routesConfig = [
     path: PATH.SIGNUP,
     component: SignUp,
   },
+
   {
     path: '/admin',
     guard: AuthGuard,
@@ -83,6 +86,18 @@ const routesConfig = [
         path: PATH.ADMIN + PATH.USERS,
         component: User,
         requireRoles: [ROLE.ADMIN, ROLE.GUIDE],
+      },
+    ],
+  },
+  {
+    path: PATH.HOME,
+    guard: AuthGuard,
+    layout: MainLayout,
+    routes: [
+      {
+        exact: true,
+        path: PATH.TOUR + '/:id',
+        component: TourDetail,
       },
     ],
   },

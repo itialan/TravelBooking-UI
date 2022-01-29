@@ -39,7 +39,7 @@ const Place = () => {
           {tours
             .filter((item, index) => index < 6)
             .map(({ id, ...otherSectionProps }) => (
-              <PlaceSingle key={id} {...otherSectionProps} />
+              <PlaceSingle key={id} id={id} {...otherSectionProps} />
             ))}
         </div>
       </div>

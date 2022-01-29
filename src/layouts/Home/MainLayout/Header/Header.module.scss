@@ -1,0 +1,188 @@
+@use '../../../../assets/scss' as s;
+
+.navbar_item {
+  background: s.$white;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border-bottom: 1px solid #e1e1e1;
+  padding: 0 10px;
+
+  @include s.max-width(s.$small) {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+  }
+
+  Button {
+    @include s.max-width(s.$small) {
+      margin-bottom: 15px;
+      width: 350px;
+      font-size: 20px !important;
+    }
+  }
+}
+
+.navbar_logo {
+  color: s.$white;
+  justify-self: start;
+  margin-left: 20px;
+  cursor: pointer;
+
+  @include s.max-width(s.$small) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(10%, -10%);
+  }
+}
+
+.fa-react {
+  margin-left: 5px;
+  font-size: 25px;
+}
+
+.nav_menu {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  list-style: none;
+  text-align: center;
+  width: 70vw;
+  justify-content: end;
+  margin-right: 5px;
+  align-items: center;
+
+  li {
+    width: 100%;
+  }
+
+  @include s.max-width(s.$small) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0;
+    position: absolute;
+    top: 65px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+    padding: 0;
+
+    &.active {
+      background: s.$white;
+      left: 0;
+      opacity: 1;
+      transition: all 0.5s ease;
+      z-index: 1;
+    }
+  }
+}
+
+.nav_links {
+  color: s.$black;
+  text-decoration: none;
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: s.$white-hover;
+    border-radius: 4px;
+    transition: all 0.2s ease-out;
+  }
+
+  @include s.max-width(s.$small) {
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    display: table;
+    font-size: 20px;
+
+    &:hover {
+      background-color: s.$white-hover;
+      border-radius: 0;
+    }
+  }
+}
+
+.nav_user {
+  //display: inline-flex;
+  //align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 12px 0;
+
+  &:hover > .dropdown {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
+
+  &_img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  span {
+    vertical-align: middle;
+  }
+
+  .dropdown {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    padding: 0;
+    min-width: 115px;
+    margin-top: 5px;
+
+    li {
+      list-style: none;
+      background: s.$white-2;
+      transition-duration: 0.5s;
+      padding: 10px;
+
+      &:hover {
+        background: s.$white-hover;
+      }
+
+      a {
+        color: s.$black;
+      }
+    }
+  }
+
+  @include s.max-width(s.$small) {
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding: 15px 100%;
+    white-space: nowrap;
+  }
+}
+
+.fa-bars {
+  color: s.$white;
+}
+
+.fa-times {
+  @include s.max-width(s.$small) {
+    color: s.$black;
+    font-size: 20px;
+  }
+}
+
+.menu_icon {
+  display: none;
+
+  @include s.max-width(s.$small) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-140%, 60%);
+    font-size: 25px;
+    cursor: pointer;
+  }
+}
