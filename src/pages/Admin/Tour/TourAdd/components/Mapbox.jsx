@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -25,7 +25,7 @@ const placeType = {
   poi: 17,
 };
 
-const Mapbox = ({ coordinates, zoom, changeCoordinates, changeZoom }) => {
+const Mapbox = ({ coordinates, zoom }) => {
   const classes = useStyles();
   const mapContainer = useRef(null);
   const map = useRef(null); // prevent the map from reloading when the user interacts with the map.

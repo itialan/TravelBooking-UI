@@ -18,7 +18,7 @@ const tourItemReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: false,
-        tour: action.payload,
+        tourItem: action.payload,
       };
     case TourItemActionTypes.CREATE_TOUR_ITEM_SUCCESS:
       return {

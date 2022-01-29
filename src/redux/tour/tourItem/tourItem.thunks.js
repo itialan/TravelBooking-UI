@@ -10,8 +10,11 @@ export const fetchTourItem = (id) => {
     try {
       const response = await getTourItem(id);
       console.log(response);
+      if (response.data.status === 'success') {
+        dispatch(actions.getTourItemSuccess(response.data.data.data));
+      }
     } catch (error) {
-      dispatch(actions.getTourItemFailure(error.message));
+      dispatch(actions.getTourItemFailure(error.response.data.message));
     }
   };
 };

@@ -59,7 +59,10 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: PATH.ADMIN + PATH.TOUR_ADD,
+        path: [
+          `${PATH.ADMIN}${PATH.TOUR_ADD}`,
+          `${PATH.ADMIN}${PATH.TOUR_ADD}/:id`,
+        ],
         component: TourAdd,
         requireRoles: [ROLE.ADMIN],
       },

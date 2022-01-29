@@ -17,3 +17,8 @@ export const postTourItem = (data) => {
   const response = axiosInstance.post('/tours', data);
   return response;
 };
+
+export const patchTourItem = (data) => {
+  const response = axiosInstance.patch(`/tours/${data.id}`, data);
+  return response;
+};

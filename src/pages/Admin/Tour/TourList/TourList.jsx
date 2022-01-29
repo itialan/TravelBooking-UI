@@ -12,7 +12,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+
+// material icons
+import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
 // constants
 import { PATH, URL } from '../../../../constants/paths';
@@ -97,6 +101,9 @@ const TourList = () => {
                   <TableCell align='center'>{tour.duration} days</TableCell>
                   <TableCell align='center'>
                     {handlePrice(tour.price)}
+                  </TableCell>
+                  <TableCell align='center'>
+                    <EditIcon />
                   </TableCell>
                 </TableRow>
               ))

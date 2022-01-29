@@ -26,8 +26,11 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
+
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import PostImage from '../../../../components/Common/PostImage/PostImage';
 
@@ -42,11 +45,24 @@ import LocationAddModal from './components/LocationAddModal';
 // thunks
 import { createTourItem } from '../../../../redux/tour/tourItem/tourItem.thunks';
 import { fetchDestinationList } from '../../../../redux/destination/destination.thunks';
+import { fetchTourItem } from '../../../../redux/tour/tourItem/tourItem.thunks';
 
 // FilePond: Register the plugins
-registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
+registerPlugin(
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType,
+  FilePondPluginFilePoster
+);
 
-const TourAdd = () => {
+const TourAdd = ({ match, history }) => {
+  console.log(match);
+  console.log(history);
+
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const routes = useSelector(routeSelector);
+  const selectedTour = useSelector((state) => state.tourItem.tourItem);
+
   const initialValues = {
     name: '',
     route: '',
@@ -62,10 +78,6 @@ const TourAdd = () => {
     hotels: [],
   };
 
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const routes = useSelector(routeSelector);
-
   const [isOpenAddHotel, setIsOpenAddHotel] = useState({
     isOpen: false,
     currHotel: null,
@@ -77,6 +89,8 @@ const TourAdd = () => {
   const [imageCover, setImageCover] = useState([]);
   const [images, setImages] = useState([]);
   const [values, setValues] = useState(initialValues);
+
+  console.log('values: ', values);
 
   const handleCloseDialogAddHotel = useCallback(() => {
     setIsOpenAddHotel({ ...isOpenAddHotel, isOpen: false });
@@ -98,6 +112,7 @@ const TourAdd = () => {
     e.preventDefault();
     const uploadImages = images?.map((img) => img.file);
     console.log(values);
+    console.log(imageCover);
     //dispatch(createTourItem(values, imageCover[0].file, uploadImages));
   };
 
@@ -172,9 +187,31 @@ const TourAdd = () => {
     [values, addNewField, isOpenAddLocation.currLocation, updateFieldValue]
   );
 
+  const setMetadataToUploadedImages = (imageName) => ({
+    source: `${imageName}`,
+    options: {
+      type: 'local',
+      metadata: {
+        poster: `http://127.0.0.1:3000/img/tours/${imageName}`,
+      },
+    },
+  });
+
   useEffect(() => {
     dispatch(fetchDestinationList());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (match.params.id) {
+      dispatch(fetchTourItem(match.params.id));
+
+      if (selectedTour) {
+        setValues(selectedTour);
+        setImageCover(setMetadataToUploadedImages(selectedTour.imageCover));
+        setImages(selectedTour.images);
+      }
+    }
+  }, [match.params.id]);
 
   return (
     <>
@@ -190,6 +227,7 @@ const TourAdd = () => {
               variant='outlined'
               label='Name'
               name='name'
+              value={values.name}
               onChange={(e) => handleInputChange(e)}
             />
           </Grid>
@@ -204,6 +242,7 @@ const TourAdd = () => {
                 label='Route'
                 fullWidth
                 name='route'
+                values={values.route.id}
                 defaultValue=''
                 onChange={(e) => handleInputChange(e)}
               >
@@ -227,6 +266,7 @@ const TourAdd = () => {
               variant='outlined'
               label='Price'
               name='price'
+              value={values.price}
               onChange={(e) => handleInputChange(e)}
             />
           </Grid>
@@ -241,6 +281,7 @@ const TourAdd = () => {
                 label='Duration'
                 fullWidth
                 name='duration'
+                value={values.duration}
                 defaultValue=''
                 onChange={(e) => handleInputChange(e)}
               >
@@ -263,6 +304,7 @@ const TourAdd = () => {
                 id='demo-simple-select-outlined'
                 label='Max Group Size'
                 name='maxGroupSize'
+                value={values.maxGroupSize}
                 fullWidth
                 defaultValue=''
                 onChange={(e) => handleInputChange(e)}
@@ -285,6 +327,7 @@ const TourAdd = () => {
               variant='outlined'
               label='Summary'
               name='summary'
+              value={values.summary}
               onChange={(e) => handleInputChange(e)}
             />
           </Grid>
@@ -298,6 +341,7 @@ const TourAdd = () => {
               variant='outlined'
               label='Description'
               name='description'
+              value={values.description}
               multiline
               rows={4}
               onChange={(e) => handleInputChange(e)}
@@ -312,6 +356,15 @@ const TourAdd = () => {
             <FilePond
               files={imageCover}
               onupdatefiles={setImageCover}
+              server={{
+                url: '/',
+                process: null,
+                revert: null,
+                // this is the property you should set in order to render your file using Poster plugin
+                load: 'http://127.0.0.1:3000/img/tours/',
+                restore: null,
+                fetch: null,
+              }}
               name='imageCover'
               maxFiles={1}
               accept='image/png, image/jpeg, image/gif'
